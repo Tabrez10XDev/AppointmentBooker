@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dashboard_graph"
+    app:startDestination="@id/slotView">
+
+    <fragment
+        android:id="@+id/slotView"
+        android:name="com.example.akshat1.fragments.SlotView"
+        android:label="fragment_slot_view"
+        tools:layout="@layout/fragment_slot_view" >
+        <action
+            android:id="@+id/action_slotView_to_addSlot"
+            app:destination="@id/addSlot" />
+    </fragment>
+    <fragment
+        android:id="@+id/addSlot"
+        android:name="com.example.akshat1.fragments.AddSlot"
+        android:label="fragment_add_slot"
+        tools:layout="@layout/fragment_add_slot" />
+</navigation>
