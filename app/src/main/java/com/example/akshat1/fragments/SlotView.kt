@@ -11,23 +11,27 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.akshat1.R
 import com.example.akshat1.adapters.DateAdapter
+import com.example.akshat1.adapters.SlotAdapter
 import com.example.akshat1.app.Dashboard
 import com.example.akshat1.app.Login
 import com.example.akshat1.databinding.DashboardBinding
 import com.example.akshat1.databinding.FragmentSlotViewBinding
+import com.example.akshat1.dialogs.DialogSlot
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.stream.Stream
+
 
 private lateinit var dateAdapter : DateAdapter
 private lateinit var binding: FragmentSlotViewBinding
 private lateinit var fireStore : FirebaseFirestore
 private lateinit var auth : FirebaseAuth
+private lateinit var slotAdapter : SlotAdapter
+
 class SlotView : Fragment() {
-
-
 
 
 
@@ -39,12 +43,43 @@ class SlotView : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentSlotViewBinding.bind(view)
-        setupRecyclerView()
+
+        setupDateRecyclerView()
+
+        setupSlotRecyclerView()
+
         auth = FirebaseAuth.getInstance()
+
         fireStore = FirebaseFirestore.getInstance()
 
         setHasOptionsMenu(true)
+
         subscribeToDates()
+
+
+        slotAdapter.setOnItemClickListener {slots->
+            val submitList = mutableListOf<Map<String,Any>>()
+
+            val mapValues = slots.values.toString().split(",")
+            val mapKey = slots.keys.toString()
+            for(mapValue in mapValues){
+                val slotMap = mapOf<String,Any>(mapKey to mapValue)
+                submitList.add(slotMap)
+            }
+            DialogSlot.newInstance(submitList)
+                    .show(childFragmentManager, DialogSlot.TAG)
+
+            Log.d("DialogSlotAdapter",submitList.toString())
+        }
+
+        dateAdapter.setOnItemClickListener {slots->
+            val submitList = feedSlotDataset(slots)
+
+            slotAdapter.loadList = submitList
+            slotAdapter.notifyDataSetChanged()
+
+        }
+
 
 
     }
@@ -54,8 +89,16 @@ class SlotView : Fragment() {
 
 
 
+    private fun setupSlotRecyclerView(){
+        slotAdapter = SlotAdapter(mutableListOf())
+        binding.rvSlot.apply {
+            adapter = slotAdapter
+            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
 
-    private fun setupRecyclerView(){
+        }
+    }
+
+    private fun setupDateRecyclerView(){
         dateAdapter = DateAdapter()
         binding.rvDate.apply {
             adapter = dateAdapter
@@ -75,20 +118,18 @@ class SlotView : Fragment() {
         val fire = fireStore.collection("dates").whereGreaterThanOrEqualTo("date",currDate).orderBy("date", Query.Direction.ASCENDING)
         fire.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             firebaseFirestoreException?.let {
-                Log.d("Excep-Dashboard",it.message.toString())
+                Log.d("Error-Dashboard",it.message.toString())
 
                 return@addSnapshotListener
             }
 
             querySnapshot?.let {documents->
-                val sb : MutableList<Map<String,Any>> = arrayListOf()
+                val submitList : MutableList<Map<String,Any>> = arrayListOf()
                 for(document in documents) {
-                    sb.add(document.data)
-                    Log.d("sb-Dashboard",document.data.toString())
-
+                    submitList.add(document.data)
                 }
 
-                dateAdapter.differ.submitList(sb)
+                dateAdapter.differ.submitList(submitList)
 
             }
         }
@@ -120,6 +161,47 @@ class SlotView : Fragment() {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         activity?.finish()
+    }
+
+    private fun feedSlotDataset(slots : Map<String, Any>): List<Map<String, Any>>{
+
+        val submitList =  mutableListOf<Map<String, Any>>()
+
+        var slotMap = mapOf<String, Any>("8" to slots.get("8").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("9" to slots.get("9").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("10" to slots.get("10").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("11" to slots.get("11").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("12" to slots.get("12").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("11" to slots.get("11").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("12" to slots.get("12").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("14" to slots.get("14").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("15" to slots.get("15").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("16" to slots.get("16").toString() )
+        submitList.add(slotMap)
+
+        slotMap = mapOf<String, Any>("17" to slots.get("17").toString() )
+        submitList.add(slotMap)
+
+
+        return submitList
     }
 
 

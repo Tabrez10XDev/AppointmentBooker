@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.akshat1.R
+import com.example.akshat1.databinding.DateItemPreviewBinding
 
 class DateAdapter :RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 
     inner class DateViewHolder(itemView : View): RecyclerView.ViewHolder(itemView)
+
+    private lateinit var binding: DateItemPreviewBinding
 
     private val differCallback = object : DiffUtil.ItemCallback<Map<String, Any>>(){
         override fun areItemsTheSame(oldItem: Map<String, Any>, newItem: Map<String, Any>): Boolean {
@@ -28,6 +31,7 @@ class DateAdapter :RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
+
         return DateViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.date_item_preview,parent,false ))
     }
 
@@ -36,22 +40,29 @@ class DateAdapter :RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: DateViewHolder, position: Int) {
-        //val article = differ.currentList[position]
-       // holder.itemView.apply {
+        val date = differ.currentList[position]
+        binding = DateItemPreviewBinding.bind(holder.itemView)
+        binding.apply {
 
-//            setOnClickListener {
-//                Toast.makeText(context,"yex",Toast.LENGTH_SHORT).show()
-//                onItemClickListener?.let { it(article) }
-//            }
-     //   }
+            val appoinmentDate = date["date"].toString()
+            val displayDate =
+                    (appoinmentDate.subSequence(6, 8).toString() + "/"
+                            + appoinmentDate.subSequence(4, 6) + "/"
+                            + appoinmentDate.subSequence(0, 4))
+            tvDate.text = displayDate
+            holder.itemView.apply {
+                setOnClickListener {
+                    onItemClickListener?.let { it(date) }
 
-
+                }
+            }
+        }
     }
-//
-//    private var onItemClickListener : ((Map<String,Any>) -> Unit)?= null
-//
-//    fun setOnItemClickListener(listener:(Map<String,Any>)->Unit){
-//        onItemClickListener = listener
-//    }
+
+    private var onItemClickListener : ((Map<String,Any>) -> Unit)?= null
+
+    fun setOnItemClickListener(listener:(Map<String,Any>)->Unit){
+        onItemClickListener = listener
+    }
 
 }

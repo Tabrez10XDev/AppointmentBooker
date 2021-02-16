@@ -3,27 +3,16 @@ package com.example.akshat1.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.akshat1.R
+import com.example.akshat1.databinding.SlotItemPreviewBinding
 
-class SlotAdapter :RecyclerView.Adapter<SlotAdapter.SlotViewHolder>() {
+class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAdapter.SlotViewHolder>() {
+
+    var loadList = rvList
+    private lateinit var binding: SlotItemPreviewBinding
 
     inner class SlotViewHolder(itemView : View): RecyclerView.ViewHolder(itemView)
-
-    private val differCallback = object : DiffUtil.ItemCallback<Map<String, Any>>(){
-        override fun areItemsTheSame(oldItem: Map<String, Any>, newItem: Map<String, Any>): Boolean {
-            return oldItem == newItem
-        }
-
-        override fun areContentsTheSame(oldItem: Map<String, Any>, newItem: Map<String, Any>): Boolean {
-            return oldItem == newItem
-        }
-
-    }
-
-    val differSlot = AsyncListDiffer(this,differCallback)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlotViewHolder {
@@ -31,26 +20,32 @@ class SlotAdapter :RecyclerView.Adapter<SlotAdapter.SlotViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return differSlot.currentList.size
+        return loadList.size
     }
 
     override fun onBindViewHolder(holder: SlotViewHolder, position: Int) {
-        //val article = differ.currentList[position]
-        // holder.itemView.apply {
+        val slot = loadList[position]
+        binding = SlotItemPreviewBinding.bind(holder.itemView)
 
-//            setOnClickListener {
-//                Toast.makeText(context,"yex",Toast.LENGTH_SHORT).show()
-//                onItemClickListener?.let { it(article) }
-//            }
-        //   }
+        binding.apply {
+            tvTime.text = slot.keys.toString()
+            tvAppointments.text = slot.values.toString()
+        }
+         holder.itemView.apply {
+
+            setOnClickListener {
+                onItemClickListener?.let { it(slot) }
+
+            }
+           }
 
 
     }
-//
-//    private var onItemClickListener : ((Map<String,Any>) -> Unit)?= null
-//
-//    fun setOnItemClickListener(listener:(Map<String,Any>)->Unit){
-//        onItemClickListener = listener
-//    }
+
+    private var onItemClickListener : ((Map<String,Any>) -> Unit)?= null
+
+    fun setOnItemClickListener(listener:(Map<String,Any>)->Unit){
+        onItemClickListener = listener
+    }
 
 }
