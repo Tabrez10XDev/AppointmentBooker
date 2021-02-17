@@ -1,6 +1,7 @@
 package com.example.akshat1.adapters
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class DateAdapter :RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
     }
 
     override fun getItemCount(): Int {
+        Log.d("SlotUser",differ.currentList.toString())
         return differ.currentList.size
     }
 

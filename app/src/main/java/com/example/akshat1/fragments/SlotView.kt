@@ -30,6 +30,7 @@ private lateinit var binding: FragmentSlotViewBinding
 private lateinit var fireStore : FirebaseFirestore
 private lateinit var auth : FirebaseAuth
 private lateinit var slotAdapter : SlotAdapter
+private lateinit var selectedDate : String
 
 class SlotView : Fragment() {
 
@@ -66,10 +67,10 @@ class SlotView : Fragment() {
                 val slotMap = mapOf<String,Any>(mapKey to mapValue)
                 submitList.add(slotMap)
             }
-            DialogSlot.newInstance(submitList)
+            Log.d("subbmitList",submitList.toString())
+            DialogSlot.newInstance(submitList, selectedDate)
                     .show(childFragmentManager, DialogSlot.TAG)
 
-            Log.d("DialogSlotAdapter",submitList.toString())
         }
 
         dateAdapter.setOnItemClickListener {slots->
@@ -200,6 +201,7 @@ class SlotView : Fragment() {
         slotMap = mapOf<String, Any>("17" to slots.get("17").toString() )
         submitList.add(slotMap)
 
+        selectedDate = slots["date"].toString()
 
         return submitList
     }

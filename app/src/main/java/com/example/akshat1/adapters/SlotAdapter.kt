@@ -1,5 +1,6 @@
 package com.example.akshat1.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAda
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlotViewHolder {
+        Log.d("createView",loadList.size.toString()
+        )
         return SlotViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.slot_item_preview,parent,false ))
     }
 
@@ -28,8 +31,8 @@ class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAda
         binding = SlotItemPreviewBinding.bind(holder.itemView)
 
         binding.apply {
-            tvTime.text = slot.keys.toString()
-            tvAppointments.text = slot.values.toString()
+            tvTime.text = slot.keys.toString().replaceBrackets()
+            tvAppointments.text = slot.values.toString().replaceBrackets()
         }
          holder.itemView.apply {
 
@@ -48,4 +51,8 @@ class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAda
         onItemClickListener = listener
     }
 
+}
+
+private fun String.replaceBrackets(): CharSequence? {
+    return replace("[","").replace("]","")
 }

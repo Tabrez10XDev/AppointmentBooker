@@ -7,26 +7,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.akshat1.R
 import com.example.akshat1.adapters.SlotAdapter
 import com.example.akshat1.databinding.DialogDeleteSlotsBinding
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class DialogSlot : DialogFragment() {
 
     private lateinit var slotAdapter: SlotAdapter
     private lateinit var binding: DialogDeleteSlotsBinding
+    private lateinit var firestore: FirebaseFirestore
 
     companion object {
 
         const val TAG = "DialogSlot"
 
         var slotList = listOf<Map<String, Any>>()
+        var selectedDate = ""
 
-        fun newInstance(_slotList: List<Map<String, Any>>): DialogSlot {
+        fun newInstance(_slotList: List<Map<String, Any>>, _selectedDate : String): DialogSlot {
             slotList = _slotList
+            selectedDate = _selectedDate
             val fragment = DialogSlot()
             return fragment
         }
@@ -45,13 +52,44 @@ class DialogSlot : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = DialogDeleteSlotsBinding.bind(view)
 
-        setupSlotRecyclerView()
+        firestore = FirebaseFirestore.getInstance()
 
-        setupClickListeners(view)
+        setupSlotRecyclerView()
 
         slotAdapter.setOnItemClickListener {
             Log.d("final",it.toString())
         }
+
+        val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                val position = viewHolder.adapterPosition
+                val slot = slotAdapter.loadList[position]
+                Log.d("delete", selectedDate)
+                deleteSlot(slot)
+                Snackbar.make(requireView(),"Article Deleted",Snackbar.LENGTH_LONG).apply {
+                    setAction("Undo"){
+                 //       viewModel.saveArticle(article)
+                    }
+                }
+            }
+
+        }
+        ItemTouchHelper(itemTouchHelperCallBack).apply {
+            attachToRecyclerView(binding.rvDialog)
+        }
+
     }
 
     override fun onStart() {
@@ -63,17 +101,7 @@ class DialogSlot : DialogFragment() {
     }
 
 
-    private fun setupClickListeners(view: View) {
-//        view.btnPositive.setOnClickListener {
-//            // TODO: Do some task here
-//            dismiss()
-//        }
-//        view.btnNegative.
-//        setOnClickListener {
-//            // TODO: Do some task here
-//            dismiss()
-//        }
-    }
+
 
     private fun setupSlotRecyclerView(){
         slotAdapter = SlotAdapter(slotList)
@@ -83,4 +111,22 @@ class DialogSlot : DialogFragment() {
 
         }
     }
+
+    private fun deleteSlot(slot : Map<String, Any>){
+        firestore.collection("dates").document(selectedDate).update(
+            slot.keys.toString().replaceBrackets(),FieldValue.arrayRemove(slot.values.toString().replaceBrackets())).addOnCanceledListener {
+            Log.d("delete", "cancel")
+        }.addOnSuccessListener {
+            Log.d("delete", "success")
+
+        }.addOnFailureListener{
+            Log.d("delete", it.message.toString())
+        }
+
+    }
+
+    private fun String.replaceBrackets(): String {
+        return replace("[","").replace("]","")
+    }
+
 }

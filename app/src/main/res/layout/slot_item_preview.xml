@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:background="@android:color/darker_gray">
 
     <TextView
@@ -27,6 +27,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvTime"
-        app:layout_constraintTop_toTopOf="@+id/tvTime"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/tvTime" />
 </androidx.constraintlayout.widget.ConstraintLayout>

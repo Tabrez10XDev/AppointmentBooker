@@ -14,7 +14,9 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.akshat1.R
 import com.example.akshat1.app.Dashboard
+import com.example.akshat1.app.DashboardUser
 import com.example.akshat1.databinding.FragmentLoginBinding
+import com.example.akshat1.util.ROOT_UID
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -76,7 +78,7 @@ class  LoginFragment : Fragment() {
         showbar()
         val email = binding.tvsign.text.toString().trim()
         val password = binding.tvpass.text.toString().trim()
-        if( email.isNotEmpty() && password.isNotEmpty()){
+        if( email.isNotEmpty() and password.isNotEmpty()){
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
@@ -103,14 +105,25 @@ class  LoginFragment : Fragment() {
 
         }
         else{
+            Log.d("Deiii","naii")
             Toast.makeText(activity,"Invalid Credentials", Toast.LENGTH_SHORT).show()
             hidebar()
         }
     }
 
     private fun checkLoggedInState(){
-        if(auth.currentUser != null){
+        Log.d("Deiii",auth.uid.toString())
+
+        if(auth.currentUser != null
+                && auth.uid == ROOT_UID){
             val intent = Intent(activity, Dashboard::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            activity?.finish()
+
+        }
+        else if(auth.currentUser != null){
+            val intent = Intent(activity, DashboardUser::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             activity?.finish()
