@@ -44,18 +44,23 @@ class DashboardUser : AppCompatActivity() {
         subscribeToDates()
 
         dateAdapter.setOnItemClickListener {slots->
+            selectedDate = slots["date"].toString()
+
             val submitList = feedSlotDataset(slots)
             slotAdapter.loadList = submitList
             slotAdapter.notifyDataSetChanged()
         }
 
+
         slotAdapter.setOnItemClickListener {slot->
             var message = "Do you want to place the appointment"
             var bool : Boolean = false
             if(slot.values.contains(auth.uid.toString())){
+                bool = true
                 message  = "Do you want to wish delete your appointment"
             }
             Log.d("CheckDialogListener","heyyy")
+
             val alertDialog: AlertDialog? = this?.let {
                 val builder = AlertDialog.Builder(it)
 
@@ -64,9 +69,11 @@ class DashboardUser : AppCompatActivity() {
                             DialogInterface.OnClickListener { dialog, id ->
                                 if(bool){
                                     deleteSlot(slot)
+                                    refreshSlotDataset()
                                 }
                                 else{
                                     addSlot(slot)
+                                    refreshSlotDataset()
                                 }
                             })
                     setNegativeButton(R.string.cancel,
@@ -79,7 +86,7 @@ class DashboardUser : AppCompatActivity() {
                 builder.create()
             }
 
-
+            alertDialog?.show()
 
 
 
@@ -155,10 +162,19 @@ class DashboardUser : AppCompatActivity() {
         }
     }
 
+    private fun refreshSlotDataset(){
+        fireStore.collection("dates").document(selectedDate).get().addOnSuccessListener {slots->
+            val data = slots.data
+
+            val submitList = feedSlotDataset(data!!.toMap())
+            slotAdapter.loadList = submitList
+            slotAdapter.notifyDataSetChanged()
+        }
+    }
+
 
     private fun feedSlotDataset(slots : Map<String, Any>): List<Map<String, Any>>{
 
-        selectedDate = slots["date"].toString()
         val submitList =  mutableListOf<Map<String, Any>>()
 
         if(slots["8"].toString().contains(auth.uid.toString()) && timeCalc(8)){
@@ -267,12 +283,15 @@ class DashboardUser : AppCompatActivity() {
     }
 
     private fun deleteSlot(slot : Map<String, Any>){
+        Log.d("LastDebug","Waiting...")
+
         fireStore.collection("dates").document(selectedDate).update(
                 slot.keys.toString().replaceBrackets(), FieldValue.arrayRemove(auth.uid.toString())
         ).addOnSuccessListener {
 
+            Log.d("LastDebug","Success")
         }.addOnFailureListener{
-
+            Log.d("LastDebug","Failure")
         }
 
     }

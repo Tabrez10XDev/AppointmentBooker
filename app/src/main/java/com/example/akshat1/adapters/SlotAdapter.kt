@@ -31,7 +31,7 @@ class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAda
         binding = SlotItemPreviewBinding.bind(holder.itemView)
 
         binding.apply {
-            tvTime.text = slot.keys.toString().replaceBrackets()
+            tvTime.text = "TIME: " + slot.keys.toString().replaceBrackets() + ".00"
             tvAppointments.text = slot.values.toString().replaceBrackets()
         }
          holder.itemView.apply {
@@ -53,6 +53,6 @@ class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAda
 
 }
 
-private fun String.replaceBrackets(): CharSequence? {
+private fun String.replaceBrackets(): String {
     return replace("[","").replace("]","")
 }
