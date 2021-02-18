@@ -6,28 +6,89 @@
     android:layout_height="match_parent"
     tools:context=".fragments.AddSlot">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/openBookingb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Open Booking"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="407dp"
+            android:layout_height="293dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/openBookingb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="340dp"
+            android:text="Open Booking"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+
+        <EditText
+            android:id="@+id/evFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:inputType="time"
+            app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
+            app:layout_constraintStart_toEndOf="@+id/tvFrom"
+            app:layout_constraintTop_toTopOf="@+id/tvFrom" />
+
+        <TextView
+            android:id="@+id/tvTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="To:"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/evFrom"
+            app:layout_constraintHorizontal_bias="0.636"
+            app:layout_constraintStart_toStartOf="@+id/tvFrom"
+            app:layout_constraintTop_toBottomOf="@+id/tvFrom" />
+
+        <TextView
+            android:id="@+id/tvFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="From:"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/openBookingb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.162"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
+            app:layout_constraintVertical_bias="0.066" />
+
+        <EditText
+            android:id="@+id/evTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:inputType="time"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTo"
+            app:layout_constraintStart_toEndOf="@+id/tvTo"
+            app:layout_constraintTop_toTopOf="@+id/tvTo" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

@@ -12,8 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.akshat1.R
 import com.example.akshat1.databinding.FragmentAddSlotBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.EnumSet.range
 
 class AddSlot : Fragment() {
 
@@ -73,18 +76,26 @@ class AddSlot : Fragment() {
 
         var clients = mutableListOf<String>()
 
-        val slot = hashMapOf(
-                "date" to date,
-                "8" to clients,
-                "9" to clients,
-                "10" to clients,
-                "11" to clients,
-                "12" to clients,
-                "14" to clients,
-                "15" to clients,
-                "16" to clients,
-                "17" to clients
+        val from : Int = binding.evFrom.text.split(":")[0].toInt()
+        val to : Int = binding.evTo.text.split(":")[0].toInt()
+
+
+        var slot = mutableMapOf<String, Any>(
+                "date" to date
         )
+
+        if(binding.evFrom.text.isEmpty()
+            || binding.evTo.text.isEmpty()
+            || to < from){
+            return
+        }
+
+
+        for(i in from until to) {
+            var date = i.toString()
+            slot[date] = clients
+        }
+
 
 
         fireStore.collection("dates").document(date.toString()).set(slot)

@@ -75,7 +75,6 @@ class SlotView : Fragment() {
 
         dateAdapter.setOnItemClickListener {slots->
             val submitList = feedSlotDataset(slots)
-
             slotAdapter.loadList = submitList
             slotAdapter.notifyDataSetChanged()
 
@@ -181,52 +180,20 @@ class SlotView : Fragment() {
         val submitList =  mutableListOf<Map<String, Any>>()
         selectedDate = slots["date"].toString()
 
-        if(timeCalc(8)){
-            var slotMap = mapOf<String, Any>("8" to slots.get("8").toString())
-            submitList.add(slotMap)
-        }
+        for(i in 0..24){
+            if(timeCalc(i)){
+                var slotMap = mapOf<String, Any>(i.toString() to slots.get(i.toString()).toString())
+                slots.get(i.toString())?.let {  submitList?.add(slotMap) }
+            }
 
-        if(timeCalc(9)){
-            var slotMap = mapOf<String, Any>("9" to slots.get("9").toString())
-            submitList.add(slotMap)
-        }
-
-        if(timeCalc(10)){
-            var slotMap = mapOf<String, Any>("10" to slots.get("10").toString())
-            submitList.add(slotMap)
-        }
-
-        if(timeCalc(11)){
-            var slotMap = mapOf<String, Any>("11" to slots.get("11").toString())
-            submitList.add(slotMap)
-        }
-
-        if(timeCalc(12)){
-            var slotMap = mapOf<String, Any>("12" to slots.get("12").toString())
-            submitList.add(slotMap)
         }
 
 
-        if(timeCalc(14)){
-            var slotMap = mapOf<String, Any>("14" to slots.get("14").toString())
-            submitList.add(slotMap)
-        }
 
 
-        if(timeCalc(15)){
-            var slotMap = mapOf<String, Any>("15" to slots.get("15").toString())
-            submitList.add(slotMap)
-        }
 
-        if(timeCalc(16)){
-            var slotMap = mapOf<String, Any>("16" to slots.get("16").toString())
-            submitList.add(slotMap)
-        }
 
-        if(timeCalc(17)){
-            var slotMap = mapOf<String, Any>("17" to slots.get("17").toString())
-            submitList.add(slotMap)
-        }
+
 
 
         return submitList
