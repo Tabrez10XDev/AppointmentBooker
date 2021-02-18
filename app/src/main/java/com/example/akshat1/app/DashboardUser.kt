@@ -55,6 +55,7 @@ class DashboardUser : AppCompatActivity() {
             if(slot.values.contains(auth.uid.toString())){
                 message  = "Do you want to wish delete your appointment"
             }
+            Log.d("CheckDialogListener","heyyy")
             val alertDialog: AlertDialog? = this?.let {
                 val builder = AlertDialog.Builder(it)
 
@@ -148,7 +149,6 @@ class DashboardUser : AppCompatActivity() {
                     submitList.add(document.data)
                 }
 
-                Log.d("DbUser",submitList.toString())
                 dateAdapter.differ.submitList(submitList)
 
             }
@@ -158,110 +158,110 @@ class DashboardUser : AppCompatActivity() {
 
     private fun feedSlotDataset(slots : Map<String, Any>): List<Map<String, Any>>{
 
+        selectedDate = slots["date"].toString()
         val submitList =  mutableListOf<Map<String, Any>>()
 
-        if(slots["8"].toString().contains(auth.uid.toString())){
+        if(slots["8"].toString().contains(auth.uid.toString()) && timeCalc(8)){
             var slotMap = mapOf<String, Any>("8" to auth.uid.toString() )
             submitList.add(slotMap)
 
         }
-        else if(slots["8"].toString().split(",").size < 5){
+        else if(slots["8"].toString().split(",").size < 5 && timeCalc(8)){
             var slotMap = mapOf<String, Any>("8" to "[]")
             submitList.add(slotMap)
 
         }
 
 
-        if(slots["9"].toString().contains(auth.uid.toString())){
+        if(slots["9"].toString().contains(auth.uid.toString()) && timeCalc(9)){
             var slotMap = mapOf<String, Any>("9" to auth.uid.toString() )
             submitList.add(slotMap)
 
         }
-        else if(slots["9"].toString().split(",").size < 5){
+        else if(slots["9"].toString().split(",").size < 5 && timeCalc(9)){
             var slotMap = mapOf<String, Any>("9" to "[]")
             submitList.add(slotMap)
 
         }
 
-        if(slots["10"].toString().contains(auth.uid.toString())){
+        if(slots["10"].toString().contains(auth.uid.toString()) && timeCalc(10)){
             var slotMap = mapOf<String, Any>("10" to auth.uid.toString() )
             submitList.add(slotMap)
 
         }
-        else if(slots["10"].toString().split(",").size < 5){
+        else if(slots["10"].toString().split(",").size < 5 && timeCalc(10)){
             var slotMap = mapOf<String, Any>("10" to "[]")
             submitList.add(slotMap)
 
         }
 
-        if(slots["11"].toString().contains(auth.uid.toString())){
+        if(slots["11"].toString().contains(auth.uid.toString()) && timeCalc(11)){
             var slotMap = mapOf<String, Any>("11" to auth.uid.toString() )
             submitList.add(slotMap)
 
         }
-        else if(slots["11"].toString().split(",").size < 5){
+        else if(slots["11"].toString().split(",").size < 5 && timeCalc(11)){
             var slotMap = mapOf<String, Any>("11" to "[]")
             submitList.add(slotMap)
 
         }
 
-        if(slots["12"].toString().contains(auth.uid.toString())){
+        if(slots["12"].toString().contains(auth.uid.toString()) && timeCalc(12)){
             var slotMap = mapOf<String, Any>("8" to auth.uid.toString() )
             submitList.add(slotMap)
 
         }
-        else if(slots["12"].toString().split(",").size < 5){
+        else if(slots["12"].toString().split(",").size < 5 && timeCalc(12)){
             var slotMap = mapOf<String, Any>("12" to "[]")
             submitList.add(slotMap)
 
         }
 
 
-        if(slots["14"].toString().contains(auth.uid.toString())){
+        if(slots["14"].toString().contains(auth.uid.toString()) && timeCalc(14)){
             var slotMap = mapOf<String, Any>("14" to auth.uid.toString() )
             submitList.add(slotMap)
 
         }
-        else if(slots["14"].toString().split(",").size < 5){
+        else if(slots["14"].toString().split(",").size < 5 && timeCalc(14)){
             var slotMap = mapOf<String, Any>("14" to "[]")
             submitList.add(slotMap)
 
         }
 
-        if(slots["15"].toString().contains(auth.uid.toString())){
+        if(slots["15"].toString().contains(auth.uid.toString()) && timeCalc(15)){
             var slotMap = mapOf<String, Any>("15" to auth.uid.toString() )
             submitList.add(slotMap)
 
         }
-        else if(slots["15"].toString().split(",").size < 5){
+        else if(slots["15"].toString().split(",").size < 5 && timeCalc(15)){
             var slotMap = mapOf<String, Any>("15" to "[]")
             submitList.add(slotMap)
 
         }
 
-        if(slots["16"].toString().contains(auth.uid.toString())){
+        if(slots["16"].toString().contains(auth.uid.toString()) && timeCalc(16)){
             var slotMap = mapOf<String, Any>("16" to auth.uid.toString() )
             submitList.add(slotMap)
 
         }
-        else if(slots["16"].toString().split(",").size < 5){
+        else if(slots["16"].toString().split(",").size < 5 && timeCalc(16)){
             var slotMap = mapOf<String, Any>("16" to "[]")
             submitList.add(slotMap)
 
         }
 
-        if(slots["17"].toString().contains(auth.uid.toString())){
+        if(slots["17"].toString().contains(auth.uid.toString()) && timeCalc(17)){
             var slotMap = mapOf<String, Any>("17" to auth.uid.toString() )
             submitList.add(slotMap)
 
         }
-        else if(slots["17"].toString().split(",").size < 5){
+        else if(slots["17"].toString().split(",").size < 5 && timeCalc(17)){
             var slotMap = mapOf<String, Any>("17" to "[]")
             submitList.add(slotMap)
 
         }
 
-        selectedDate = slots["date"].toString()
 
         return submitList
     }
@@ -288,6 +288,16 @@ class DashboardUser : AppCompatActivity() {
 
     }
 
+    private fun timeCalc(selectedHour : Int): Boolean{
+        val dateFormat = SimpleDateFormat("yyyy:MM:dd")
+        val currDate = dateFormat.format(Date()).toString().replace(":","")
+        var todayBoolean = currDate == selectedDate
+        var currHour = Calendar.HOUR_OF_DAY + 1
+        if(todayBoolean){
+            return currHour < selectedHour
+        }
+        return true
+    }
 
     private fun String.replaceBrackets(): String {
         return replace("[","").replace("]","")
