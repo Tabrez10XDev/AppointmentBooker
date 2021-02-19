@@ -9,5 +9,21 @@
         android:id="@+id/slotViewUser"
         android:name="com.example.akshat1.fragments.SlotViewUser"
         android:label="fragment_slot_view_user"
-        tools:layout="@layout/fragment_slot_view_user" />
+        tools:layout="@layout/fragment_slot_view_user" >
+        <action
+            android:id="@+id/action_slotViewUser_to_userDetailsForm"
+            app:destination="@id/userDetailsForm" />
+        <action
+            android:id="@+id/action_slotViewUser_to_viewDetailsForm"
+            app:destination="@id/viewDetailsForm" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailsForm"
+        android:name="com.example.akshat1.fragments.UserDetailsForm"
+        android:label="fragment_user_details_form"
+        tools:layout="@layout/fragment_user_details_form" />
+    <fragment
+        android:id="@+id/viewDetailsForm"
+        android:name="com.example.akshat1.fragments.ViewDetailsForm"
+        android:label="ViewDetailsForm" />
 </navigation>

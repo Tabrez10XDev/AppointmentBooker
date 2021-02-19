@@ -33,6 +33,7 @@ class DashboardUser : AppCompatActivity() {
         binding = DashboardUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
+        supportActionBar?.title = auth.currentUser?.email
 
 
 

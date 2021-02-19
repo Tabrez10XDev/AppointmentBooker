@@ -30,12 +30,13 @@ class DialogSlot : DialogFragment() {
 
         var slotList = listOf<Map<String, Any>>()
         var selectedDate = ""
+        var dateMap = mapOf<String, Any>()
 
-        fun newInstance(_slotList: List<Map<String, Any>>, _selectedDate : String): DialogSlot {
+        fun newInstance(_slotList: List<Map<String, Any>>, _selectedDate : String, _dateMap : Map<String, Any>): DialogSlot {
             slotList = _slotList
+            dateMap = _dateMap
             selectedDate = _selectedDate
-            val fragment = DialogSlot()
-            return fragment
+            return DialogSlot()
         }
 
     }
@@ -57,7 +58,7 @@ class DialogSlot : DialogFragment() {
         setupSlotRecyclerView()
 
         slotAdapter.setOnItemClickListener {
-            Log.d("final",it.toString())
+
         }
 
         val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(
@@ -73,21 +74,21 @@ class DialogSlot : DialogFragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-                val position = viewHolder.adapterPosition
-                val slot = slotAdapter.loadList[position]
-                Log.d("delete", selectedDate)
-                deleteSlot(slot)
-                Snackbar.make(requireView(),"Article Deleted",Snackbar.LENGTH_LONG).apply {
-                    setAction("Undo"){
-                 //       viewModel.saveArticle(article)
-                    }
-                }
+//
+//                val position = viewHolder.adapterPosition
+//                val slot = slotAdapter.loadList[position]
+//                Log.d("delete", selectedDate)
+//                deleteSlot(slot)
+//                Snackbar.make(requireView(),"Article Deleted",Snackbar.LENGTH_LONG).apply {
+//                    setAction("Undo"){
+//                 //       viewModel.saveArticle(article)
+//                    }
+//                }
             }
 
         }
         ItemTouchHelper(itemTouchHelperCallBack).apply {
-            attachToRecyclerView(binding.rvDialog)
+//            attachToRecyclerView(binding.rvDialog)
         }
 
     }

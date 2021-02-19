@@ -24,11 +24,14 @@ import java.util.*
 
 class Dashboard : AppCompatActivity() {
     private lateinit var binding: DashboardBinding
+    private lateinit var auth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        auth = FirebaseAuth.getInstance()
+        supportActionBar?.title = auth.currentUser?.email
 
 
 

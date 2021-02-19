@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.akshat1.R
 import com.example.akshat1.adapters.DateAdapter
@@ -26,6 +27,7 @@ class SlotViewUser : Fragment() {
     private lateinit var auth : FirebaseAuth
     private lateinit var binding : FragmentSlotViewUserBinding
     private lateinit var selectedDate : String
+    private var dateMap = mapOf<String, Any>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -44,12 +46,30 @@ class SlotViewUser : Fragment() {
 
         dateAdapter.setOnItemClickListener {slots->
             selectedDate = slots["date"].toString()
+            dateMap = slots
             val submitList = feedSlotDataset(slots)
-            Log.d("SlotUserView",submitList.toString())
             slotAdapter.loadList = submitList
             slotAdapter.notifyDataSetChanged()
         }
+
+        slotAdapter.setOnItemClickListener {slot->
+            val bundle = Bundle()
+            val slotKey = slot.keys.toString().replaceBrackets()
+            bundle.putString("selectedDate", selectedDate)
+            bundle.putString("slotKey", slotKey)
+            if(dateMap[slotKey].toString().contains(auth.uid.toString())){
+                bundle.putString("documentID", dateMap[slotKey+auth.uid.toString()+"Ref"].toString())
+                  findNavController().navigate(R.id.action_slotViewUser_to_viewDetailsForm, bundle)
+            }
+            else{
+                findNavController().navigate(R.id.action_slotViewUser_to_userDetailsForm, bundle)
+            }
+
+        }
+
     }
+
+
 
 
     private fun setupSlotRecyclerView(){
@@ -98,6 +118,8 @@ class SlotViewUser : Fragment() {
         }
     }
 
+
+
     private fun refreshSlotDataset(){
         fireStore.collection("dates").document(selectedDate).get().addOnSuccessListener {slots->
             val data = slots.data
@@ -115,7 +137,7 @@ class SlotViewUser : Fragment() {
 
         for(i in 0..24){
             if(slots[i.toString()].toString().contains(auth.uid.toString()) && timeCalc(i)){
-                var slotMap = mapOf<String, Any>(i.toString() to auth.uid.toString() )
+                var slotMap = mapOf<String, Any>(i.toString() to slots[i.toString()+auth.uid.toString()].toString() + "- your Appointment")
                 submitList.add(slotMap)
 
             }
@@ -133,28 +155,7 @@ class SlotViewUser : Fragment() {
         return submitList
     }
 
-    private fun deleteSlot(slot : Map<String, Any>){
 
-        fireStore.collection("dates").document(selectedDate).update(
-            slot.keys.toString().replaceBrackets(), FieldValue.arrayRemove(auth.uid.toString())
-        ).addOnSuccessListener {
-
-        }.addOnFailureListener{
-
-        }
-
-    }
-
-    private fun addSlot(slot : Map<String, Any>){
-        fireStore.collection("dates").document(selectedDate).update(
-            slot.keys.toString().replaceBrackets(), FieldValue.arrayUnion(auth.uid.toString())
-        ).addOnSuccessListener {
-
-        }.addOnFailureListener{
-
-        }
-
-    }
 
     private fun timeCalc(selectedHour : Int): Boolean{
         val dateFormat = SimpleDateFormat("yyyy:MM:dd")

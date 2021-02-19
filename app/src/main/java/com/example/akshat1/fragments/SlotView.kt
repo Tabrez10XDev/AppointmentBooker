@@ -31,6 +31,7 @@ private lateinit var fireStore : FirebaseFirestore
 private lateinit var auth : FirebaseAuth
 private lateinit var slotAdapter : SlotAdapter
 private lateinit var selectedDate : String
+private var dateMap = mapOf<String,Any>()
 
 class SlotView : Fragment() {
 
@@ -67,13 +68,13 @@ class SlotView : Fragment() {
                 val slotMap = mapOf<String,Any>(mapKey to mapValue)
                 submitList.add(slotMap)
             }
-            Log.d("subbmitList",submitList.toString())
-            DialogSlot.newInstance(submitList, selectedDate)
+            DialogSlot.newInstance(submitList, selectedDate, dateMap)
                     .show(childFragmentManager, DialogSlot.TAG)
 
         }
 
         dateAdapter.setOnItemClickListener {slots->
+            dateMap = slots
             val submitList = feedSlotDataset(slots)
             slotAdapter.loadList = submitList
             slotAdapter.notifyDataSetChanged()
@@ -182,21 +183,27 @@ class SlotView : Fragment() {
 
         for(i in 0..24){
             if(timeCalc(i)){
-                var slotMap = mapOf<String, Any>(i.toString() to slots.get(i.toString()).toString())
-                slots.get(i.toString())?.let {  submitList?.add(slotMap) }
+                slots.get((i.toString()))?.let {
+                    var nameList = mutableListOf<String>()
+                    val slotList = slots[i.toString()].toString().split(",")
+                    for (slot in slotList){
+                        nameList.add(dateMap[i.toString()+slot.replaceBrackets()].toString())
+                    }
+                    nameList?.let{nameList->
+                        var slotMap = mapOf<String, Any>(i.toString() to nameList.toString().replaceBrackets())
+                        submitList?.add(slotMap)
+                    }
+                }
             }
 
         }
 
 
-
-
-
-
-
-
-
         return submitList
+    }
+
+    private fun String.replaceBrackets(): String {
+        return replace("[","").replace("]","")
     }
 
 
