@@ -13,10 +13,17 @@
         <action
             android:id="@+id/action_slotView_to_addSlot"
             app:destination="@id/addSlot" />
+        <action
+            android:id="@+id/action_slotView_to_viewDetailsForm2"
+            app:destination="@id/viewDetailsForm2" />
     </fragment>
     <fragment
         android:id="@+id/addSlot"
         android:name="com.example.akshat1.fragments.AddSlot"
         android:label="fragment_add_slot"
         tools:layout="@layout/fragment_add_slot" />
+    <fragment
+        android:id="@+id/viewDetailsForm2"
+        android:name="com.example.akshat1.fragments.ViewDetailsForm"
+        android:label="ViewDetailsForm" />
 </navigation>

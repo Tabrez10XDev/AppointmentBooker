@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,8 +32,12 @@ class DialogSlot : DialogFragment() {
         var slotList = listOf<Map<String, Any>>()
         var selectedDate = ""
         var dateMap = mapOf<String, Any>()
+        var uidMap = mapOf<String, Any>()
 
-        fun newInstance(_slotList: List<Map<String, Any>>, _selectedDate : String, _dateMap : Map<String, Any>): DialogSlot {
+        fun newInstance(_slotList: List<Map<String, Any>>,
+                        _selectedDate : String,
+                        _dateMap : Map<String, Any>
+        ): DialogSlot {
             slotList = _slotList
             dateMap = _dateMap
             selectedDate = _selectedDate
@@ -57,7 +62,16 @@ class DialogSlot : DialogFragment() {
 
         setupSlotRecyclerView()
 
-        slotAdapter.setOnItemClickListener {
+        slotAdapter.setOnItemClickListener {slots->
+
+            val nameMap = slots.filter { (key, value) -> !key.endsWith("uid")}
+            val uidMap = slots.filter { (key, value) -> key.endsWith("uid")}
+            val key = nameMap.keys.toString()
+            val uid = uidMap.values.toString()
+            val bundle = Bundle()
+            val formDocID = dateMap[(key+uid).replaceBrackets()+"Ref"].toString()
+            bundle.putString("formDocID",formDocID)
+            findNavController().navigate(R.id.action_slotView_to_viewDetailsForm2,bundle)
 
         }
 
@@ -112,6 +126,8 @@ class DialogSlot : DialogFragment() {
 
         }
     }
+
+
 
     private fun deleteSlot(slot : Map<String, Any>){
         firestore.collection("dates").document(selectedDate).update(

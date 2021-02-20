@@ -58,7 +58,7 @@ class SlotViewUser : Fragment() {
             bundle.putString("selectedDate", selectedDate)
             bundle.putString("slotKey", slotKey)
             if(dateMap[slotKey].toString().contains(auth.uid.toString())){
-                bundle.putString("documentID", dateMap[slotKey+auth.uid.toString()+"Ref"].toString())
+                bundle.putString("formDocID", dateMap[slotKey+auth.uid.toString()+"Ref"].toString())
                   findNavController().navigate(R.id.action_slotViewUser_to_viewDetailsForm, bundle)
             }
             else{

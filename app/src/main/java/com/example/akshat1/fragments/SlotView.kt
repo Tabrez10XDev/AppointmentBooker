@@ -60,12 +60,16 @@ class SlotView : Fragment() {
 
 
         slotAdapter.setOnItemClickListener {slots->
+            val nameMap = slots.filter { (key, value) -> !key.endsWith("uid")}
+            val uidMap = slots.filter { (key, value) -> key.endsWith("uid")}
             val submitList = mutableListOf<Map<String,Any>>()
-
-            val mapValues = slots.values.toString().split(",")
-            val mapKey = slots.keys.toString()
+            val mapValues = nameMap.values.toString().split(",")
+            val mapKey = nameMap.keys.toString()
             for(mapValue in mapValues){
-                val slotMap = mapOf<String,Any>(mapKey to mapValue)
+                val slotMap = mapOf<String,Any>(
+                        mapKey to mapValue,
+                        mapKey+"uid" to uidMap[mapKey.replaceBrackets()+"uid"].toString()
+                )
                 submitList.add(slotMap)
             }
             DialogSlot.newInstance(submitList, selectedDate, dateMap)
@@ -185,12 +189,17 @@ class SlotView : Fragment() {
             if(timeCalc(i)){
                 slots.get((i.toString()))?.let {
                     var nameList = mutableListOf<String>()
+                    var uidList = mutableListOf<String>()
                     val slotList = slots[i.toString()].toString().split(",")
                     for (slot in slotList){
+                        uidList.add(slot)
                         nameList.add(dateMap[i.toString()+slot.replaceBrackets()].toString())
                     }
                     nameList?.let{nameList->
-                        var slotMap = mapOf<String, Any>(i.toString() to nameList.toString().replaceBrackets())
+                        var slotMap = mapOf<String, Any>(
+                                i.toString() to nameList.toString().replaceBrackets(),
+                                i.toString()+"uid" to uidList.toString().replaceBrackets()
+                        )
                         submitList?.add(slotMap)
                     }
                 }
