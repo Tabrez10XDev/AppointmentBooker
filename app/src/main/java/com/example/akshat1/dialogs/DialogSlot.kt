@@ -65,17 +65,16 @@ class DialogSlot : DialogFragment() {
 
 
 
-        slotAdapter.setOnItemClickListener {slots->
+        slotAdapter.setOnItemClickListener {slots, i->
 
-            Log.d("shams",slots.toString())
             val nameMap = slots.filter { (key, value) -> !key.endsWith("uid")}
             val uidMap = slots.filter { (key, value) -> key.endsWith("uid")}
             val key = nameMap.keys.toString()
-            val uid = uidMap.values.toString()
-            Log.d(TAG,slots.toString())
+            val uid = uidMap.values.toString().split(",")[i].trim()
+            Log.d("weed",uid)
             val bundle = Bundle()
-            Log.d("BUNDLEs",slots.toString())
             val formDocID = dateMap[(key+uid).replaceBrackets()+"Ref"].toString()
+
             bundle.apply {
                 putString("uid",uid.replaceBrackets())
                 putString("formDocID",formDocID)

@@ -39,7 +39,7 @@ class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAda
             holder.itemView.apply {
 
                 setOnClickListener {
-                    onItemClickListener?.let { it(slot) }
+                    onItemClickListener?.let { it(slot, position) }
                     Log.d("soby", slot.toString())
 
                 }
@@ -49,9 +49,9 @@ class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAda
 
     }
 
-    private var onItemClickListener : ((Map<String,Any>) -> Unit)?= null
+    private var onItemClickListener : ((Map<String,Any>, position : Int) -> Unit)?= null
 
-    fun setOnItemClickListener(listener:(Map<String,Any>)->Unit){
+    fun setOnItemClickListener(listener:(Map<String,Any>, Int)->Unit){
         onItemClickListener = listener
     }
 

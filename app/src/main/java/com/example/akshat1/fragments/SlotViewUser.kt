@@ -52,7 +52,7 @@ class SlotViewUser : Fragment() {
             slotAdapter.notifyDataSetChanged()
         }
 
-        slotAdapter.setOnItemClickListener {slot->
+        slotAdapter.setOnItemClickListener {slot, _->
             val bundle = Bundle()
             val slotKey = slot.keys.toString().replaceBrackets()
 

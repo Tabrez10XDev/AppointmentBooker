@@ -59,7 +59,7 @@ class SlotView : Fragment() {
         subscribeToDates()
 
 
-        slotAdapter.setOnItemClickListener {slots->
+        slotAdapter.setOnItemClickListener {slots, _->
             val nameMap = slots.filter { (key, value) -> !key.endsWith("uid")}
             val uidMap = slots.filter { (key, value) -> key.endsWith("uid")}
             val submitList = mutableListOf<Map<String,Any>>()
@@ -72,7 +72,6 @@ class SlotView : Fragment() {
                         mapKey+"uid" to uidMap[mapKey.replaceBrackets()+"uid"].toString()
                 )
                 submitList.add(slotMap)
-                Log.d("MAPS",slotMap.toString())
 
             }
             DialogSlot.newInstance(submitList, selectedDate, dateMap)
