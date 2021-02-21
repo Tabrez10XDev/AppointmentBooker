@@ -31,18 +31,20 @@ class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAda
         binding = SlotItemPreviewBinding.bind(holder.itemView)
 
         binding.apply {
-            val filteredMap = slot.filter { (key, value) -> !key.endsWith("uid")}
+            val filteredMap = slot.filter { (key, value) -> !key.endsWith("uid") }
 
             tvTime.text = "TIME: " + filteredMap.keys.toString().replaceBrackets() + ".00"
             tvAppointments.text = filteredMap.values.toString().replaceBrackets()
-        }
-         holder.itemView.apply {
 
-            setOnClickListener {
-                onItemClickListener?.let { it(slot) }
+            holder.itemView.apply {
 
+                setOnClickListener {
+                    onItemClickListener?.let { it(slot) }
+                    Log.d("soby", slot.toString())
+
+                }
             }
-           }
+        }
 
 
     }

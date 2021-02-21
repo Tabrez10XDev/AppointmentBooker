@@ -62,7 +62,6 @@ class SlotView : Fragment() {
         slotAdapter.setOnItemClickListener {slots->
             val nameMap = slots.filter { (key, value) -> !key.endsWith("uid")}
             val uidMap = slots.filter { (key, value) -> key.endsWith("uid")}
-            Log.d("MAPS", nameMap.toString() + "name \n" + uidMap.toString() + "uid")
             val submitList = mutableListOf<Map<String,Any>>()
             val mapValues = nameMap.values.toString().split(",")
             val mapKey = nameMap.keys.toString()
@@ -73,6 +72,8 @@ class SlotView : Fragment() {
                         mapKey+"uid" to uidMap[mapKey.replaceBrackets()+"uid"].toString()
                 )
                 submitList.add(slotMap)
+                Log.d("MAPS",slotMap.toString())
+
             }
             DialogSlot.newInstance(submitList, selectedDate, dateMap)
                     .show(childFragmentManager, DialogSlot.TAG)
@@ -184,7 +185,7 @@ class SlotView : Fragment() {
 
     private fun feedSlotDataset(slots : Map<String, Any>): List<Map<String, Any>>{
 
-        val submitList =  mutableListOf<Map<String, Any>>()
+        val submitList : MutableList<Map<String,Any>> = arrayListOf()
         selectedDate = slots["date"].toString()
 
         for(i in 0..24){
@@ -193,7 +194,6 @@ class SlotView : Fragment() {
                     var nameList = mutableListOf<String>()
                     var uidList = mutableListOf<String>()
                     val slotList = slots[i.toString()].toString().split(",")
-
                     for (slot in slotList){
 
                         uidList.add(slot.replaceBrackets().trim())

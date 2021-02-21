@@ -61,12 +61,13 @@ class DialogSlot : DialogFragment() {
 
         setupSlotRecyclerView()
 
-        slotAdapter.differ.submitList(slotList)
+        slotAdapter.loadList = slotList
 
 
 
         slotAdapter.setOnItemClickListener {slots->
 
+            Log.d("shams",slots.toString())
             val nameMap = slots.filter { (key, value) -> !key.endsWith("uid")}
             val uidMap = slots.filter { (key, value) -> key.endsWith("uid")}
             val key = nameMap.keys.toString()

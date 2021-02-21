@@ -43,6 +43,7 @@ class DateAdapter :RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 
     override fun onBindViewHolder(holder: DateViewHolder, position: Int) {
         val date = differ.currentList[position]
+
         binding = DateItemPreviewBinding.bind(holder.itemView)
         binding.apply {
 
@@ -56,7 +57,8 @@ class DateAdapter :RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
                 setOnClickListener {
                     onItemClickListener?.let { it(date)
                     Log.d("shabba",date.toString())}
-
+                    Log.d("Nazz",position.toString())
+                    Log.d("Nazz",date.toString())
                 }
             }
         }
