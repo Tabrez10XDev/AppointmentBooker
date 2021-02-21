@@ -60,13 +60,14 @@ class UserDetailsForm : Fragment() {
         selectedDate = this.arguments?.getString("selectedDate") ?: ""
         slotKey = this.arguments?.getString("slotKey") ?: ""
         auth = FirebaseAuth.getInstance()
+        binding.tvFormDate.text = selectedDate.subSequence(6,8).toString() + ":" + selectedDate.subSequence(4,6) + ":" +selectedDate.subSequence(0,4)
+        binding.tvFormTime.text = slotKey + ":00"
         binding.Formbtn.setOnClickListener{
             val name = binding.etName.text
             val number = binding.etNumber.text
             val email = binding.etEmail.text
             val address = binding.etAddress.text
             val visitPurpose = binding.etVisitPurpose.text
-
 
             if(name.isNotEmpty()
                 && number.isNotEmpty()
@@ -81,7 +82,9 @@ class UserDetailsForm : Fragment() {
                         "email" to email.toString(),
                         "address" to address.toString(),
                         "visitPurpose" to visitPurpose.toString(),
-                        "selectedUri" to selectedUri.toString()
+                        "selectedUri" to selectedUri.toString(),
+                        "time" to slotKey,
+                        "date" to selectedDate
                 )
                 uploadForm(slotMap, name.toString())
             }
@@ -167,7 +170,19 @@ class UserDetailsForm : Fragment() {
         fireStore.set(slotMap,SetOptions.merge())
         withContext(Dispatchers.Main){
             Toast.makeText(requireActivity(),"Created Booking",Toast.LENGTH_SHORT).show()
+            setDisabled()
         }
+    }
+
+    private fun setDisabled(){
+        binding.etName.isEnabled = false
+        binding.etNumber.isEnabled = false
+        binding.etEmail.isEnabled = false
+        binding.etAddress.isEnabled = false
+        binding.etVisitPurpose.isEnabled = false
+        binding.uploadFilebtn.isEnabled = false
+        binding.Formbtn.isEnabled = false
+
     }
 
     private fun uploadForm(slotMap : Map<String, Any>, name : String) = CoroutineScope(Dispatchers.IO).launch {
@@ -175,7 +190,4 @@ class UserDetailsForm : Fragment() {
         fireStore.set(slotMap)
         addSlot(fireStore, name)
     }
-
-
-
 }

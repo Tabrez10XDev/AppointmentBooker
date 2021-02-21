@@ -32,7 +32,6 @@ class DialogSlot : DialogFragment() {
         var slotList = listOf<Map<String, Any>>()
         var selectedDate = ""
         var dateMap = mapOf<String, Any>()
-        var uidMap = mapOf<String, Any>()
 
         fun newInstance(_slotList: List<Map<String, Any>>,
                         _selectedDate : String,
@@ -62,15 +61,26 @@ class DialogSlot : DialogFragment() {
 
         setupSlotRecyclerView()
 
+        slotAdapter.differ.submitList(slotList)
+
+
+
         slotAdapter.setOnItemClickListener {slots->
 
             val nameMap = slots.filter { (key, value) -> !key.endsWith("uid")}
             val uidMap = slots.filter { (key, value) -> key.endsWith("uid")}
             val key = nameMap.keys.toString()
             val uid = uidMap.values.toString()
+            Log.d(TAG,slots.toString())
             val bundle = Bundle()
+            Log.d("BUNDLEs",slots.toString())
             val formDocID = dateMap[(key+uid).replaceBrackets()+"Ref"].toString()
-            bundle.putString("formDocID",formDocID)
+            bundle.apply {
+                putString("uid",uid.replaceBrackets())
+                putString("formDocID",formDocID)
+                putString("selectedDate", selectedDate)
+                putString("slotKey",key.replaceBrackets())
+            }
             findNavController().navigate(R.id.action_slotView_to_viewDetailsForm2,bundle)
 
         }
@@ -119,7 +129,7 @@ class DialogSlot : DialogFragment() {
 
 
     private fun setupSlotRecyclerView(){
-        slotAdapter = SlotAdapter(slotList)
+        slotAdapter = SlotAdapter(mutableListOf())
         binding.rvDialog.apply {
             adapter = slotAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
@@ -129,18 +139,7 @@ class DialogSlot : DialogFragment() {
 
 
 
-    private fun deleteSlot(slot : Map<String, Any>){
-        firestore.collection("dates").document(selectedDate).update(
-            slot.keys.toString().replaceBrackets(),FieldValue.arrayRemove(slot.values.toString().replaceBrackets())).addOnCanceledListener {
-            Log.d("delete", "cancel")
-        }.addOnSuccessListener {
-            Log.d("delete", "success")
 
-        }.addOnFailureListener{
-            Log.d("delete", it.message.toString())
-        }
-
-    }
 
     private fun String.replaceBrackets(): String {
         return replace("[","").replace("]","")

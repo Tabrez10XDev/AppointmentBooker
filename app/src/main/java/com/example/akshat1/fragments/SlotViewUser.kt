@@ -55,9 +55,11 @@ class SlotViewUser : Fragment() {
         slotAdapter.setOnItemClickListener {slot->
             val bundle = Bundle()
             val slotKey = slot.keys.toString().replaceBrackets()
+
             bundle.putString("selectedDate", selectedDate)
-            bundle.putString("slotKey", slotKey)
+            bundle.putString("slotKey", slotKey.replaceBrackets())
             if(dateMap[slotKey].toString().contains(auth.uid.toString())){
+                bundle.putString("uid",auth.uid)
                 bundle.putString("formDocID", dateMap[slotKey+auth.uid.toString()+"Ref"].toString())
                   findNavController().navigate(R.id.action_slotViewUser_to_viewDetailsForm, bundle)
             }

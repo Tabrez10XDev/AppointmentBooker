@@ -54,7 +54,8 @@ class DateAdapter :RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
             tvDate.text = displayDate
             holder.itemView.apply {
                 setOnClickListener {
-                    onItemClickListener?.let { it(date) }
+                    onItemClickListener?.let { it(date)
+                    Log.d("shabba",date.toString())}
 
                 }
             }
