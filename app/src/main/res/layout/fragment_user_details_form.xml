@@ -74,7 +74,7 @@
                 android:layout_marginTop="24dp"
                 android:ems="10"
                 android:hint="Enter Your Address here"
-                android:inputType="textPostalAddress"
+                android:inputType="textMultiLine|textPostalAddress"
                 android:textColor="#000000"
                 app:layout_constraintEnd_toEndOf="@+id/etEmail"
                 app:layout_constraintStart_toStartOf="@+id/etEmail"
@@ -103,12 +103,12 @@
                 android:id="@+id/Formbtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="24dp"
                 android:text="Book your Slot"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/uploadFilebtn" />
+                app:layout_constraintTop_toBottomOf="@+id/tvAPI" />
 
             <Button
                 android:id="@+id/uploadFilebtn"
@@ -125,9 +125,10 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:autoLink="web"
                 android:ellipsize="end"
+                android:linksClickable="true"
                 android:maxLines="1"
-                android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="@+id/uploadFilebtn"
                 app:layout_constraintStart_toEndOf="@+id/uploadFilebtn"
                 app:layout_constraintTop_toTopOf="@+id/uploadFilebtn" />
@@ -139,10 +140,22 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.78" />
+                app:layout_constraintVertical_bias="0.609" />
+
+            <TextView
+                android:id="@+id/tvAPI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:autoLink="web"
+                android:linksClickable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/uploadFilebtn" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

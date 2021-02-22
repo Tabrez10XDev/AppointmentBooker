@@ -12,7 +12,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.akshat1.R
 import com.example.akshat1.app.Dashboard
+import com.example.akshat1.app.DashboardUser
 import com.example.akshat1.databinding.FragmentSignupBinding
+import com.example.akshat1.util.ROOT_UID
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -102,12 +104,23 @@ class SignupFragment : Fragment() {
 
     private fun checkLoggedInState(){
 
-        if(auth.currentUser != null){
-            val intent = Intent(activity, Dashboard::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-            startActivity(intent)
-            activity?.finish()
+            if(auth.currentUser != null
+                && auth.uid == ROOT_UID
+            ){
+                val intent = Intent(activity, Dashboard::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                activity?.finish()
+
+            }
+            else if(auth.currentUser != null){
+                val intent = Intent(activity, DashboardUser::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                activity?.finish()
+
+
         }
     }
 

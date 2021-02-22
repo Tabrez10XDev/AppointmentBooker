@@ -103,9 +103,10 @@ class ViewDetailsForm : Fragment() {
             binding.etAddress.setText(data!!["address"].toString())
             binding.etVisitPurpose.setText(data!!["visitPurpose"].toString())
             binding.tvUri.text = data["selectedUri"].toString()
+            binding.tvAPI.text = data["meetLink"].toString()
             val selectedDate = data["date"].toString()
-           // binding.tvFormDate.text = selectedDate.subSequence(6,8).toString() + ":" + selectedDate.subSequence(4,6) + ":" +selectedDate.subSequence(0,4)
-           // binding.tvFormTime.text = data["time"].toString() + ":00"
+            binding.tvFormDate.text = selectedDate.subSequence(6,8).toString() + ":" + selectedDate.subSequence(4,6) + ":" +selectedDate.subSequence(0,4)
+            binding.tvFormTime.text = data["time"].toString() + ":00"
             binding.uploadFilebtn.isEnabled = false
                 hidebar()
             }

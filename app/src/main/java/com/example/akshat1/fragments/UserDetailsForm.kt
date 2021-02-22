@@ -13,13 +13,16 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.akshat1.R
+import com.example.akshat1.api.RetrofitInstance
 import com.example.akshat1.databinding.FragmentUserDetailsFormBinding
+import com.example.akshat1.util.apikey
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
+import com.google.gson.JsonObject
 import kotlinx.coroutines.*
 import java.sql.Time
 import java.sql.Timestamp
@@ -75,7 +78,6 @@ class UserDetailsForm : Fragment() {
                 && address.isNotEmpty()
                 && visitPurpose.isNotEmpty()
                 && number.length == 10){
-                //TODO
                 val slotMap = mapOf<String,Any>(
                         "name" to name.toString(),
                         "number" to number.toString(),
@@ -84,7 +86,8 @@ class UserDetailsForm : Fragment() {
                         "visitPurpose" to visitPurpose.toString(),
                         "selectedUri" to selectedUri.toString(),
                         "time" to slotKey,
-                        "date" to selectedDate
+                        "date" to selectedDate,
+                        "meetLink" to ""
                 )
                 uploadForm(slotMap, name.toString())
             }
@@ -158,7 +161,7 @@ class UserDetailsForm : Fragment() {
 //        }
 //    }
 
-    private fun addSlot(documentReference: DocumentReference, name : String) = CoroutineScope(Dispatchers.IO).launch{
+    private fun addSlot(documentReference: DocumentReference, name : String, meetLink : String) = CoroutineScope(Dispatchers.IO).launch{
         val fireStore = firestore.collection("dates").document(selectedDate)
         fireStore.update(
                 slotKey, FieldValue.arrayUnion(auth.uid.toString())
@@ -171,6 +174,8 @@ class UserDetailsForm : Fragment() {
         withContext(Dispatchers.Main){
             Toast.makeText(requireActivity(),"Created Booking",Toast.LENGTH_SHORT).show()
             setDisabled()
+            binding.tvAPI.text = meetLink
+
         }
     }
 
@@ -187,7 +192,35 @@ class UserDetailsForm : Fragment() {
 
     private fun uploadForm(slotMap : Map<String, Any>, name : String) = CoroutineScope(Dispatchers.IO).launch {
         val fireStore = firestore.collection("dates").document()
-        fireStore.set(slotMap)
-        addSlot(fireStore, name)
+
+        fireStore.set(slotMap).addOnSuccessListener {
+            setMeetLink(fireStore)
+        }
+        addSlot(fireStore, name, slotMap["meetLink"].toString())
+    }
+
+    private fun setMeetLink(docRef : DocumentReference){
+        val data = JsonObject()
+        data.addProperty("apikey", apikey)
+        val time = slotKey+":00"
+        val date = selectedDate.subSequence(0,4).toString() + "-" + selectedDate.subSequence(4,6) + "-" + selectedDate.subSequence(6,8)
+        data.addProperty("time", time )
+        data.addProperty("date", date)
+
+        Log.d("dateplustime", time + "\n" + date)
+
+        var link = ""
+        CoroutineScope(Dispatchers.IO).launch{
+            val retrievedData = RetrofitInstance.api.getMeetLink(data)
+            if(retrievedData.isSuccessful){
+            link = retrievedData.body()?.link.toString()
+                docRef.update("meetLink", link)
+                withContext(Dispatchers.Main){
+                    binding.tvAPI.text = link
+                }
+
+            }
+        }
+
     }
 }

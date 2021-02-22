@@ -13,6 +13,7 @@ import com.example.akshat1.adapters.DateAdapter
 import com.example.akshat1.adapters.SlotAdapter
 import com.example.akshat1.databinding.DashboardUserBinding
 import com.example.akshat1.databinding.FragmentSlotViewUserBinding
+import com.example.akshat1.util.BounceEdgeEffectFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -79,7 +80,7 @@ class SlotViewUser : Fragment() {
         binding.rvSlotUser.apply {
             adapter = slotAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
-
+            edgeEffectFactory = BounceEdgeEffectFactory()
         }
     }
 
@@ -88,7 +89,7 @@ class SlotViewUser : Fragment() {
         binding.rvDateUser.apply {
             adapter = dateAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL,false)
-
+            edgeEffectFactory = BounceEdgeEffectFactory()
         }
     }
 

@@ -12,14 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.akshat1.R
 import com.example.akshat1.adapters.DateAdapter
 import com.example.akshat1.adapters.SlotAdapter
+import com.example.akshat1.api.RetrofitInstance
 import com.example.akshat1.app.Dashboard
 import com.example.akshat1.app.Login
 import com.example.akshat1.databinding.DashboardBinding
 import com.example.akshat1.databinding.FragmentSlotViewBinding
 import com.example.akshat1.dialogs.DialogSlot
+import com.example.akshat1.util.BounceEdgeEffectFactory
+import com.example.akshat1.util.apikey
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Stream
@@ -55,6 +62,7 @@ class SlotView : Fragment() {
         fireStore = FirebaseFirestore.getInstance()
 
         setHasOptionsMenu(true)
+
 
         subscribeToDates()
 
@@ -101,7 +109,7 @@ class SlotView : Fragment() {
         binding.rvSlot.apply {
             adapter = slotAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
-
+            edgeEffectFactory = BounceEdgeEffectFactory()
         }
     }
 
@@ -110,6 +118,7 @@ class SlotView : Fragment() {
         binding.rvDate.apply {
             adapter = dateAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL,false)
+            edgeEffectFactory = BounceEdgeEffectFactory()
 
         }
     }

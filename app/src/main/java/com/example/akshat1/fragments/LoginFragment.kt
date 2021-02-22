@@ -112,7 +112,6 @@ class  LoginFragment : Fragment() {
     }
 
     private fun checkLoggedInState(){
-        Log.d("Deiii",auth.uid.toString())
 
         if(auth.currentUser != null
                 && auth.uid == ROOT_UID){
