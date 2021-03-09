@@ -50,7 +50,6 @@ class  LoginFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         hidebar()
 
-
         binding.blogin.setOnClickListener {
 
             hideKeyboard()
@@ -105,7 +104,6 @@ class  LoginFragment : Fragment() {
 
         }
         else{
-            Log.d("Deiii","naii")
             Toast.makeText(activity,"Invalid Credentials", Toast.LENGTH_SHORT).show()
             hidebar()
         }

@@ -207,8 +207,6 @@ class UserDetailsForm : Fragment() {
         data.addProperty("time", time )
         data.addProperty("date", date)
 
-        Log.d("dateplustime", time + "\n" + date)
-
         var link = ""
         CoroutineScope(Dispatchers.IO).launch{
             val retrievedData = RetrofitInstance.api.getMeetLink(data)
