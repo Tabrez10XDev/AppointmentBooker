@@ -27,7 +27,7 @@ class SlotViewUser : Fragment() {
     private lateinit var dateAdapter : DateAdapter
     private lateinit var auth : FirebaseAuth
     private lateinit var binding : FragmentSlotViewUserBinding
-    private lateinit var selectedDate : String
+    private var selectedDate : String ?= null
     private var dateMap = mapOf<String, Any>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -123,10 +123,20 @@ class SlotViewUser : Fragment() {
 
 
 
-    private fun refreshSlotDataset(){
-        fireStore.collection("dates").document(selectedDate).get().addOnSuccessListener {slots->
-            val data = slots.data
+    override fun onResume() {
+        selectedDate?.let {
+            refreshSlotDataset()
+        }
+        super.onResume()
+    }
 
+
+    private fun refreshSlotDataset(){
+        fireStore.collection("dates").document(selectedDate.toString()).get().addOnSuccessListener { slots->
+            val data = slots.data
+            data?.let {
+                dateMap = data.toMap()
+            }
             val submitList = feedSlotDataset(data!!.toMap())
             slotAdapter.loadList = submitList
             slotAdapter.notifyDataSetChanged()

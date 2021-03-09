@@ -110,29 +110,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAPI" />
 
-            <Button
-                android:id="@+id/uploadFilebtn"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Upload file"
-                app:layout_constraintStart_toStartOf="@+id/tvFormDate"
-                app:layout_constraintTop_toBottomOf="@+id/tvFormDate" />
-
-            <TextView
-                android:id="@+id/tvUri"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:autoLink="web"
-                android:ellipsize="end"
-                android:linksClickable="true"
-                android:maxLines="1"
-                app:layout_constraintBottom_toBottomOf="@+id/uploadFilebtn"
-                app:layout_constraintStart_toEndOf="@+id/uploadFilebtn"
-                app:layout_constraintTop_toTopOf="@+id/uploadFilebtn" />
-
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyle"
@@ -149,13 +126,13 @@
                 android:id="@+id/tvAPI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="24dp"
                 android:autoLink="web"
                 android:linksClickable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/uploadFilebtn" />
+                app:layout_constraintTop_toBottomOf="@+id/tvFormDate" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

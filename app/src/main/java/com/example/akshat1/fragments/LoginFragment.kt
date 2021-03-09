@@ -75,12 +75,16 @@ class  LoginFragment : Fragment() {
 
     private fun loginUser() {
         showbar()
-        val email = binding.tvsign.text.toString().trim()
+        Log.d("Lj","Inside")
+
+        val number = binding.tvsign.text.toString().trim()
         val password = binding.tvpass.text.toString().trim()
-        if( email.isNotEmpty() and password.isNotEmpty()){
+        if( number.isNotEmpty() and password.isNotEmpty()){
+            Log.d("Lj","Not empty")
+
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
+                    auth.signInWithEmailAndPassword(number,password).addOnSuccessListener {
                         hidebar()
                         checkLoggedInState()
                     }.addOnFailureListener {

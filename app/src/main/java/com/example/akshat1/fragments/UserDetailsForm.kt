@@ -34,7 +34,6 @@ class UserDetailsForm : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: FragmentUserDetailsFormBinding
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var firebaseStorage: FirebaseStorage
     private var selectedDate = ""
     private var selectedUri : String ?= ""
     private var slotKey : String = ""
@@ -59,7 +58,6 @@ class UserDetailsForm : Fragment() {
         binding = FragmentUserDetailsFormBinding.bind(view)
         hidebar()
         firestore = FirebaseFirestore.getInstance()
-        firebaseStorage = FirebaseStorage.getInstance()
         selectedDate = this.arguments?.getString("selectedDate") ?: ""
         slotKey = this.arguments?.getString("slotKey") ?: ""
         auth = FirebaseAuth.getInstance()
@@ -89,6 +87,8 @@ class UserDetailsForm : Fragment() {
                         "date" to selectedDate,
                         "meetLink" to ""
                 )
+                showbar()
+
                 uploadForm(slotMap, name.toString())
             }
             else{
@@ -97,59 +97,20 @@ class UserDetailsForm : Fragment() {
 
         }
 
-        binding.uploadFilebtn.setOnClickListener {
-            selectFile()
-        }
+
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
 
-        if(requestCode == 1 && resultCode == Activity.RESULT_OK && data != null ){
-            data.data?.let {uri->
-                showbar()
-                uploadPhoto(uri)
 
-            }
-        }
-    }
-
-    private fun uploadPhoto(file : Uri) = CoroutineScope(Dispatchers.IO).launch{
-        val filePath = Objects.hash(auth.uid + file).toString()
-        val imageRef = firebaseStorage.reference.child(filePath)
-            imageRef.putFile(file).addOnSuccessListener {
-                it.storage.downloadUrl.addOnSuccessListener {  uri->
-                    selectedUri = uri.toString()
-                    binding.tvUri.text = selectedUri
-                    hidebar()
-                }
-                hidebar()
-            }.addOnCanceledListener {
-                hidebar()
-            }.addOnFailureListener {
-                hidebar()
-            }
-    }
-
-    private fun selectFile(){
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "*/*" //check in shameers phone TODO
-        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-        startActivityForResult(Intent.createChooser(intent, "Select File"),1);
-    }
 
     private fun hidebar(){
         binding.progressBar.visibility = View.INVISIBLE
-        binding.uploadFilebtn.isEnabled = true
 
     }
 
     private fun showbar(){
         binding.progressBar.visibility = View.VISIBLE
-        binding.uploadFilebtn.isEnabled = false
     }
 
 //    private fun deleteSlot(slot : Map<String, Any>){
@@ -173,6 +134,7 @@ class UserDetailsForm : Fragment() {
         fireStore.set(slotMap,SetOptions.merge())
         withContext(Dispatchers.Main){
             Toast.makeText(requireActivity(),"Created Booking",Toast.LENGTH_SHORT).show()
+            hidebar()
             setDisabled()
             binding.tvAPI.text = meetLink
 
@@ -185,22 +147,26 @@ class UserDetailsForm : Fragment() {
         binding.etEmail.isEnabled = false
         binding.etAddress.isEnabled = false
         binding.etVisitPurpose.isEnabled = false
-        binding.uploadFilebtn.isEnabled = false
         binding.Formbtn.isEnabled = false
 
     }
 
     private fun uploadForm(slotMap : Map<String, Any>, name : String) = CoroutineScope(Dispatchers.IO).launch {
+
         val fireStore = firestore.collection("dates").document()
 
         fireStore.set(slotMap).addOnSuccessListener {
+            Log.d("onccc","yes")
+
             setMeetLink(fireStore)
+
         }
         addSlot(fireStore, name, slotMap["meetLink"].toString())
     }
 
     private fun setMeetLink(docRef : DocumentReference){
         val data = JsonObject()
+        Log.d("onccc","wha")
         data.addProperty("apikey", apikey)
         val time = slotKey+":00"
         val date = selectedDate.subSequence(0,4).toString() + "-" + selectedDate.subSequence(4,6) + "-" + selectedDate.subSequence(6,8)
@@ -210,8 +176,15 @@ class UserDetailsForm : Fragment() {
         var link = ""
         CoroutineScope(Dispatchers.IO).launch{
             val retrievedData = RetrofitInstance.api.getMeetLink(data)
+            Log.d("onccc",retrievedData.toString())
+
             if(retrievedData.isSuccessful){
-            link = retrievedData.body()?.link.toString()
+                Log.d("onccc","success")
+
+                link = retrievedData.body()?.link.toString()
+                if(link.isEmpty()){
+                    link = retrievedData.message()
+                }
                 docRef.update("meetLink", link)
                 withContext(Dispatchers.Main){
                     binding.tvAPI.text = link

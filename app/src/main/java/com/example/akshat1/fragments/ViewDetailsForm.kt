@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.akshat1.R
 import com.example.akshat1.databinding.FragmentUserDetailsFormBinding
 import com.example.akshat1.dialogs.DialogSlot
+import com.example.akshat1.util.ROOT_UID
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
@@ -29,6 +31,7 @@ class ViewDetailsForm : Fragment() {
     private lateinit var binding : FragmentUserDetailsFormBinding
     private lateinit var selectedDate: String
     private lateinit var slotTime : String
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -50,15 +53,15 @@ class ViewDetailsForm : Fragment() {
         binding = FragmentUserDetailsFormBinding.bind(view)
         firestore = FirebaseFirestore.getInstance()
         setDisabled()
+        auth = FirebaseAuth.getInstance()
         formDocID = arguments?.getString("formDocID").toString()
         slotTime = arguments?.getString("slotKey").toString()
         selectedDate = arguments?.getString("selectedDate").toString()
         uid = arguments?.getString("uid").toString()
         fetchForm(formDocID)
-        Log.d("InsideDetails",formDocID)
-
-        Log.d("InsideViewForm", slotTime + selectedDate)
         binding.Formbtn.setOnClickListener {
+
+             showbar()
             deleteForm()
         }
     }
@@ -70,13 +73,14 @@ class ViewDetailsForm : Fragment() {
             deleteSlot()
             setDisabled()
             Toast.makeText(requireActivity(),"Success", Toast.LENGTH_LONG).show()
-            findNavController().popBackStack()
-
+            hidebar()
+            binding.Formbtn.isEnabled = false
         }
 
         }
     catch (e : Exception){
         withContext(Dispatchers.Main){
+            hidebar()
             Toast.makeText(requireActivity(),e.message, Toast.LENGTH_LONG).show()
         }
     }
@@ -88,7 +92,6 @@ class ViewDetailsForm : Fragment() {
         binding.etEmail.isEnabled = false
         binding.etAddress.isEnabled = false
         binding.etVisitPurpose.isEnabled = false
-        binding.uploadFilebtn.isEnabled = false
         binding.Formbtn.text = "Delete Slot"
 
     }
@@ -102,12 +105,10 @@ class ViewDetailsForm : Fragment() {
             binding.etEmail.setText(data!!["email"].toString())
             binding.etAddress.setText(data!!["address"].toString())
             binding.etVisitPurpose.setText(data!!["visitPurpose"].toString())
-            binding.tvUri.text = data["selectedUri"].toString()
             binding.tvAPI.text = data["meetLink"].toString()
             val selectedDate = data["date"].toString()
             binding.tvFormDate.text = selectedDate.subSequence(6,8).toString() + ":" + selectedDate.subSequence(4,6) + ":" +selectedDate.subSequence(0,4)
             binding.tvFormTime.text = data["time"].toString() + ":00"
-            binding.uploadFilebtn.isEnabled = false
                 hidebar()
             }
         }.addOnFailureListener {
@@ -126,15 +127,30 @@ class ViewDetailsForm : Fragment() {
 
     private fun deleteSlot() = CoroutineScope(Dispatchers.IO).launch{
         val docRef = firestore.collection("dates").document(selectedDate)
+        var count = 0
         docRef.update(
                 slotTime, FieldValue.arrayRemove(uid)
-        )
+        ).addOnSuccessListener {
+            count+=1
+            count(count)
+        }
         docRef.update(
                 slotTime+uid+"Ref", FieldValue.delete()
-        )
+        ).addOnSuccessListener {
+            count+=1
+            count(count)
+        }
         docRef.update(
                 slotTime + uid , FieldValue.delete()
-        )
+        ).addOnSuccessListener {
+            count+=1
+            count(count)
+        }
     }
 
+    private fun count(count : Int){
+     if(count==3){
+         findNavController().popBackStack(R.id.slotView,false)
+     }
+    }
 }

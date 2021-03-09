@@ -74,12 +74,12 @@ class SignupFragment : Fragment() {
     }
     private fun registerUser() {
         showbar()
-        val email = binding.tvsign.text.toString().trim()
+        val number = binding.tvsign.text.toString().trim()
         val password = binding.tvpass.text.toString().trim()
-        if( email.isNotEmpty() && password.isNotEmpty()){
+        if( number.isNotEmpty() && password.isNotEmpty()){
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    auth.createUserWithEmailAndPassword(email,password).addOnSuccessListener {
+                    auth.createUserWithEmailAndPassword(number,password).addOnSuccessListener {
                         Toast.makeText(activity,"Account created",Toast.LENGTH_SHORT).show()
                         checkLoggedInState()
                     }.addOnFailureListener(){

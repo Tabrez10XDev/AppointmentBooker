@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.akshat1.R
@@ -37,7 +38,7 @@ private lateinit var binding: FragmentSlotViewBinding
 private lateinit var fireStore : FirebaseFirestore
 private lateinit var auth : FirebaseAuth
 private lateinit var slotAdapter : SlotAdapter
-private lateinit var selectedDate : String
+private var selectedDate : String ?= null
 private var dateMap = mapOf<String,Any>()
 
 class SlotView : Fragment() {
@@ -58,6 +59,7 @@ class SlotView : Fragment() {
         setupSlotRecyclerView()
 
         auth = FirebaseAuth.getInstance()
+
 
         fireStore = FirebaseFirestore.getInstance()
 
@@ -82,8 +84,8 @@ class SlotView : Fragment() {
                 submitList.add(slotMap)
 
             }
-            DialogSlot.newInstance(submitList, selectedDate, dateMap)
-                    .show(childFragmentManager, DialogSlot.TAG)
+            val dialog = DialogSlot.newInstance(submitList, selectedDate.toString(), dateMap)
+            dialog.show(childFragmentManager, DialogSlot.TAG)
 
         }
 
@@ -98,6 +100,16 @@ class SlotView : Fragment() {
 
 
     }
+
+    override fun onResume() {
+        selectedDate?.let {
+            Log.d("megasuper", selectedDate.toString())
+          //  refreshSlotDataset(selectedDate.toString())
+        }
+        super.onResume()
+    }
+
+
 
 
 
@@ -135,15 +147,19 @@ class SlotView : Fragment() {
         fire.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             firebaseFirestoreException?.let {
                 Log.d("Error-Dashboard",it.message.toString())
+                Log.d("Lj","Dates")
 
                 return@addSnapshotListener
             }
+
+            Log.d("Lj",querySnapshot.toString() + "q")
 
             querySnapshot?.let {documents->
                 val submitList : MutableList<Map<String,Any>> = arrayListOf()
                 for(document in documents) {
                     submitList.add(document.data)
                 }
+                Log.d("Lj",submitList.toString() + "l")
 
                 dateAdapter.differ.submitList(submitList)
 

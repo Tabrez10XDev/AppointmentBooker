@@ -25,5 +25,9 @@
     <fragment
         android:id="@+id/viewDetailsForm2"
         android:name="com.example.akshat1.fragments.ViewDetailsForm"
-        android:label="ViewDetailsForm" />
+        android:label="ViewDetailsForm" >
+        <action
+            android:id="@+id/action_viewDetailsForm2_to_slotView"
+            app:destination="@id/slotView" />
+    </fragment>
 </navigation>

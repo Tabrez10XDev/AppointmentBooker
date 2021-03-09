@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -45,6 +46,7 @@ class DialogSlot : DialogFragment() {
 
     }
 
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -61,9 +63,9 @@ class DialogSlot : DialogFragment() {
 
         setupSlotRecyclerView()
 
-        slotAdapter.loadList = slotList
-
-
+        slotList?.let {
+            slotAdapter.loadList = slotList!!
+        }
 
         slotAdapter.setOnItemClickListener {slots, i->
 
@@ -117,6 +119,8 @@ class DialogSlot : DialogFragment() {
 
     }
 
+
+
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(
@@ -135,6 +139,20 @@ class DialogSlot : DialogFragment() {
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
 
         }
+    }
+
+    override fun onResume() {
+        firestore.collection("dates").document(selectedDate).get().addOnSuccessListener {slots->
+            val data = slots.data
+            data?.let {
+            if(dateMap != data.toMap()){
+                dialog?.dismiss()
+            }
+
+        }
+        }
+
+        super.onResume()
     }
 
 
