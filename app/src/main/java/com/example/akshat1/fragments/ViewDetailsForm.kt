@@ -130,27 +130,14 @@ class ViewDetailsForm : Fragment() {
         var count = 0
         docRef.update(
                 slotTime, FieldValue.arrayRemove(uid)
-        ).addOnSuccessListener {
-            count+=1
-            count(count)
-        }
+        )
         docRef.update(
                 slotTime+uid+"Ref", FieldValue.delete()
-        ).addOnSuccessListener {
-            count+=1
-            count(count)
-        }
+        )
         docRef.update(
                 slotTime + uid , FieldValue.delete()
-        ).addOnSuccessListener {
-            count+=1
-            count(count)
-        }
+        )
     }
 
-    private fun count(count : Int){
-     if(count==3){
-         findNavController().popBackStack()
-     }
-    }
+
 }
