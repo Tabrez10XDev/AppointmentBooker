@@ -150,7 +150,7 @@ class ViewDetailsForm : Fragment() {
 
     private fun count(count : Int){
      if(count==3){
-         findNavController().popBackStack(R.id.slotView,false)
+         findNavController().popBackStack()
      }
     }
 }

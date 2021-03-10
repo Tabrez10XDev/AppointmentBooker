@@ -6,6 +6,7 @@ import com.example.akshat1.R
 
 class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_Akshat1)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
         supportActionBar?.title = "Virtual Appointment"

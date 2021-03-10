@@ -166,13 +166,20 @@ class UserDetailsForm : Fragment() {
 
     private fun setMeetLink(docRef : DocumentReference){
         val data = JsonObject()
-        Log.d("onccc","wha")
         data.addProperty("apikey", apikey)
-        val time = slotKey+":00"
+        var time = ""
+        time = if(slotKey.length == 1){
+            "0$slotKey:00"
+        }
+        else{
+            slotKey + ":00"
+        }
+
         val date = selectedDate.subSequence(0,4).toString() + "-" + selectedDate.subSequence(4,6) + "-" + selectedDate.subSequence(6,8)
         data.addProperty("time", time )
         data.addProperty("date", date)
 
+        Log.d("onccc", apikey + "\n" + time + "\n" + date)
         var link = ""
         CoroutineScope(Dispatchers.IO).launch{
             val retrievedData = RetrofitInstance.api.getMeetLink(data)
