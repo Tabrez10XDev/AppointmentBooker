@@ -31,7 +31,7 @@ class Dashboard : AppCompatActivity() {
         binding = DashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
-        supportActionBar?.title = "Virtual Appointment"
+        supportActionBar?.title = "Admin Dashboard"
 
 
 

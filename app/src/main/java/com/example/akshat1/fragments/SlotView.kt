@@ -202,7 +202,7 @@ class SlotView : Fragment() {
         var currHour = Calendar.HOUR_OF_DAY + 1
         Log.d("times",currHour.toString())
         if(todayBoolean){
-            return currHour < selectedHour
+            return currHour <= selectedHour
         }
         return true
     }

@@ -2,10 +2,8 @@ package com.example.akshat1.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
@@ -14,6 +12,7 @@ import com.example.akshat1.databinding.FragmentAddSlotBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.EnumSet.range
@@ -45,6 +44,7 @@ class AddSlot : Fragment() {
         var date = ""
         var month = ""
         var year = ""
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
 
         binding.calendarView.setOnDateChangeListener { view, yearView, monthView, dayOfMonth ->
             date = dayOfMonth.toString()
@@ -58,14 +58,26 @@ class AddSlot : Fragment() {
         }
 
 
+
+
         binding.openBookingb.setOnClickListener {
+
+            if(date.isEmpty()){
+                Toast.makeText(requireContext(),"Pick a date",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val dateFormat = SimpleDateFormat("yyyy:MM:dd")
             val currDate = dateFormat.format(Date()).toString().replace(":","").toInt()
             val selectedDate = (year+month+date).toInt()
             if(currDate <= selectedDate
             //Internet Connection
             ) {
-                openBooking(selectedDate)
+                try {
+                    openBooking(selectedDate)
+                }catch (e : Exception){
+                    Toast.makeText(requireContext(),e.message,Toast.LENGTH_LONG).show()
+                }
             }
         }
 
@@ -75,10 +87,8 @@ class AddSlot : Fragment() {
     private fun openBooking(date : Int){
 
         var clients = mutableListOf<String>()
-
         val from : Int = binding.evFrom.text.split(":")[0].toInt()
         val to : Int = binding.evTo.text.split(":")[0].toInt()
-
 
         var slot = mutableMapOf<String, Any>(
                 "date" to date
