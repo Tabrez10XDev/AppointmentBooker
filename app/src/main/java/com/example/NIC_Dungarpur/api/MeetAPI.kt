@@ -1,6 +1,6 @@
-package com.example.akshat1.api
+package com.example.NIC_Dungarpur.api
 
-import com.example.akshat1.data.MeetResponse
+import com.example.NIC_Dungarpur.data.MeetResponse
 import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.Body

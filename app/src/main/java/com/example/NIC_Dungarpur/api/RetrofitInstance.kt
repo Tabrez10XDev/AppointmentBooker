@@ -1,6 +1,6 @@
-package com.example.akshat1.api
+package com.example.NIC_Dungarpur.api
 
-import com.example.akshat1.util.BASE_URL
+import com.example.NIC_Dungarpur.util.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

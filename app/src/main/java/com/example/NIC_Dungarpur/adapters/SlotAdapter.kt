@@ -1,12 +1,12 @@
-package com.example.akshat1.adapters
+package com.example.NIC_Dungarpur.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.akshat1.R
-import com.example.akshat1.databinding.SlotItemPreviewBinding
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.databinding.SlotItemPreviewBinding
 
 class SlotAdapter(rvList : List<Map<String, Any>>) :RecyclerView.Adapter<SlotAdapter.SlotViewHolder>() {
 

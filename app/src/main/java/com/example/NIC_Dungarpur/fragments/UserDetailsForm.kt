@@ -1,33 +1,26 @@
-package com.example.akshat1.fragments
+package com.example.NIC_Dungarpur.fragments
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
-import com.example.akshat1.R
-import com.example.akshat1.api.RetrofitInstance
-import com.example.akshat1.databinding.FragmentUserDetailsFormBinding
-import com.example.akshat1.util.apikey
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.api.RetrofitInstance
+import com.example.NIC_Dungarpur.databinding.FragmentUserDetailsFormBinding
+import com.example.NIC_Dungarpur.util.apikey
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.JsonObject
 import kotlinx.coroutines.*
-import java.sql.Time
-import java.sql.Timestamp
-import java.util.*
-import kotlin.random.Random
 
 class UserDetailsForm : Fragment() {
 
@@ -57,6 +50,8 @@ class UserDetailsForm : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentUserDetailsFormBinding.bind(view)
         hidebar()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
         firestore = FirebaseFirestore.getInstance()
         selectedDate = this.arguments?.getString("selectedDate") ?: ""
         slotKey = this.arguments?.getString("slotKey") ?: ""

@@ -1,8 +1,7 @@
-package com.example.akshat1.fragments
+package com.example.NIC_Dungarpur.fragments
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import com.example.akshat1.R
-import com.example.akshat1.app.Dashboard
-import com.example.akshat1.app.DashboardUser
-import com.example.akshat1.databinding.FragmentSignupBinding
-import com.example.akshat1.util.ROOT_UID
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.app.Dashboard
+import com.example.NIC_Dungarpur.app.DashboardUser
+import com.example.NIC_Dungarpur.databinding.FragmentSignupBinding
+import com.example.NIC_Dungarpur.util.ROOT_UID
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

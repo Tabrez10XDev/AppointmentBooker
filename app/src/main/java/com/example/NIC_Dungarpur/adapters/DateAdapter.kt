@@ -1,4 +1,4 @@
-package com.example.akshat1.adapters
+package com.example.NIC_Dungarpur.adapters
 
 
 import android.util.Log
@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.akshat1.R
-import com.example.akshat1.databinding.DateItemPreviewBinding
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.databinding.DateItemPreviewBinding
 
 class DateAdapter :RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 

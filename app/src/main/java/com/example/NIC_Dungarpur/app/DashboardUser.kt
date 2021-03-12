@@ -1,25 +1,13 @@
-package com.example.akshat1.app
+package com.example.NIC_Dungarpur.app
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.akshat1.R
-import com.example.akshat1.adapters.DateAdapter
-import com.example.akshat1.adapters.SlotAdapter
-import com.example.akshat1.databinding.DashboardUserBinding
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.databinding.DashboardUserBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import kotlinx.coroutines.NonCancellable.cancel
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DashboardUser : AppCompatActivity() {
 

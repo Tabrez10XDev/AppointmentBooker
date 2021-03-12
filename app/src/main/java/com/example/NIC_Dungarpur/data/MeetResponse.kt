@@ -1,4 +1,4 @@
-package com.example.akshat1.data
+package com.example.NIC_Dungarpur.data
 
 data class MeetResponse(
     val link: String,

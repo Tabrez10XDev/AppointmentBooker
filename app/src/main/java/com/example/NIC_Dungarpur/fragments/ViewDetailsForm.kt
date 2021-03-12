@@ -1,7 +1,6 @@
-package com.example.akshat1.fragments
+package com.example.NIC_Dungarpur.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,8 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.akshat1.R
-import com.example.akshat1.databinding.FragmentUserDetailsFormBinding
-import com.example.akshat1.dialogs.DialogSlot
-import com.example.akshat1.util.ROOT_UID
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.databinding.FragmentUserDetailsFormBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,7 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
-import java.sql.Ref
 
 class ViewDetailsForm : Fragment() {
 

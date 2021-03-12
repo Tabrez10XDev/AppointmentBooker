@@ -1,4 +1,4 @@
-package com.example.akshat1.fragments
+package com.example.NIC_Dungarpur.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -8,14 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.akshat1.R
-import com.example.akshat1.adapters.DateAdapter
-import com.example.akshat1.adapters.SlotAdapter
-import com.example.akshat1.databinding.DashboardUserBinding
-import com.example.akshat1.databinding.FragmentSlotViewUserBinding
-import com.example.akshat1.util.BounceEdgeEffectFactory
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.adapters.DateAdapter
+import com.example.NIC_Dungarpur.adapters.SlotAdapter
+import com.example.NIC_Dungarpur.databinding.DashboardUserBinding
+import com.example.NIC_Dungarpur.databinding.FragmentSlotViewUserBinding
+import com.example.NIC_Dungarpur.util.BounceEdgeEffectFactory
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.text.SimpleDateFormat
@@ -174,8 +173,13 @@ class SlotViewUser : Fragment() {
         val dateFormat = SimpleDateFormat("yyyy:MM:dd")
         val currDate = dateFormat.format(Date()).toString().replace(":","")
         var todayBoolean = currDate == selectedDate
-        var currHour = Calendar.HOUR_OF_DAY + 1
+        val current = Date()
+        val formatter = SimpleDateFormat("HH")
+        val time = formatter.format(current)
+        var currHour = time.toInt()
+
         if(todayBoolean){
+            Log.d("Fatee",time )
             return currHour < selectedHour
         }
         return true

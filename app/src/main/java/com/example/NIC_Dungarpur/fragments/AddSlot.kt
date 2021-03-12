@@ -1,21 +1,17 @@
-package com.example.akshat1.fragments
+package com.example.NIC_Dungarpur.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
-import com.example.akshat1.R
-import com.example.akshat1.databinding.FragmentAddSlotBinding
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.databinding.FragmentAddSlotBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.EnumSet.range
 
 class AddSlot : Fragment() {
 

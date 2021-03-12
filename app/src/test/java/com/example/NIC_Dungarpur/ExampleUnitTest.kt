@@ -1,4 +1,4 @@
-package com.example.akshat1
+package com.example.NIC_Dungarpur
 
 import org.junit.Test
 

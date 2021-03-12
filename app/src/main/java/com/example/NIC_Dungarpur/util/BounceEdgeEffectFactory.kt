@@ -1,4 +1,4 @@
-package com.example.akshat1.util
+package com.example.NIC_Dungarpur.util
 
 import android.graphics.Canvas
 import android.widget.EdgeEffect

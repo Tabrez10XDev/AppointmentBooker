@@ -1,4 +1,4 @@
-package com.example.akshat1
+package com.example.NIC_Dungarpur
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

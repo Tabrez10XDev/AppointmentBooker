@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/slotView"
-        android:name="com.example.akshat1.fragments.SlotView"
+        android:name="com.example.NIC_Dungarpur.fragments.SlotView"
         android:label="fragment_slot_view"
         tools:layout="@layout/fragment_slot_view" >
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/addSlot"
-        android:name="com.example.akshat1.fragments.AddSlot"
+        android:name="com.example.NIC_Dungarpur.fragments.AddSlot"
         android:label="fragment_add_slot"
         tools:layout="@layout/fragment_add_slot" />
     <fragment
         android:id="@+id/viewDetailsForm2"
-        android:name="com.example.akshat1.fragments.ViewDetailsForm"
+        android:name="com.example.NIC_Dungarpur.fragments.ViewDetailsForm"
         android:label="ViewDetailsForm" >
         <action
             android:id="@+id/action_viewDetailsForm2_to_slotView"

@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:ems="10"
+            android:hint="hh:mm"
             android:inputType="time"
             app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
             app:layout_constraintStart_toEndOf="@+id/tvFrom"
@@ -82,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:ems="10"
+            android:hint="hh:mm"
             android:inputType="time"
             app:layout_constraintBottom_toBottomOf="@+id/tvTo"
             app:layout_constraintStart_toEndOf="@+id/tvTo"
@@ -92,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Time in 24 Hours (hh:mm):"
+            android:text="Time in 24 Hours:"
             app:layout_constraintStart_toStartOf="@+id/tvFrom"
             app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 

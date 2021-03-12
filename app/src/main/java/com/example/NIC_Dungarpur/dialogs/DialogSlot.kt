@@ -1,4 +1,4 @@
-package com.example.akshat1.dialogs
+package com.example.NIC_Dungarpur.dialogs
 
 import android.os.Bundle
 import android.util.Log
@@ -6,17 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.akshat1.R
-import com.example.akshat1.adapters.SlotAdapter
-import com.example.akshat1.databinding.DialogDeleteSlotsBinding
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.FieldValue
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.adapters.SlotAdapter
+import com.example.NIC_Dungarpur.databinding.DialogDeleteSlotsBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
 

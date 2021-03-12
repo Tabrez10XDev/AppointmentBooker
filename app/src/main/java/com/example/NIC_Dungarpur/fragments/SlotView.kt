@@ -1,36 +1,25 @@
-package com.example.akshat1.fragments
+package com.example.NIC_Dungarpur.fragments
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.akshat1.R
-import com.example.akshat1.adapters.DateAdapter
-import com.example.akshat1.adapters.SlotAdapter
-import com.example.akshat1.api.RetrofitInstance
-import com.example.akshat1.app.Dashboard
-import com.example.akshat1.app.Login
-import com.example.akshat1.databinding.DashboardBinding
-import com.example.akshat1.databinding.FragmentSlotViewBinding
-import com.example.akshat1.dialogs.DialogSlot
-import com.example.akshat1.util.BounceEdgeEffectFactory
-import com.example.akshat1.util.apikey
+import com.example.NIC_Dungarpur.R
+import com.example.NIC_Dungarpur.adapters.DateAdapter
+import com.example.NIC_Dungarpur.adapters.SlotAdapter
+import com.example.NIC_Dungarpur.app.Login
+import com.example.NIC_Dungarpur.databinding.DashboardBinding
+import com.example.NIC_Dungarpur.databinding.FragmentSlotViewBinding
+import com.example.NIC_Dungarpur.dialogs.DialogSlot
+import com.example.NIC_Dungarpur.util.BounceEdgeEffectFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.gson.JsonObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.stream.Stream
 
 
 private lateinit var dateAdapter : DateAdapter
@@ -199,8 +188,11 @@ class SlotView : Fragment() {
         val dateFormat = SimpleDateFormat("yyyy:MM:dd")
         val currDate = dateFormat.format(Date()).toString().replace(":","")
         var todayBoolean = currDate == selectedDate
-        var currHour = Calendar.HOUR_OF_DAY + 1
-        Log.d("times",currHour.toString())
+        val current = Date()
+        val formatter = SimpleDateFormat("HH")
+        val time = formatter.format(current)
+        var currHour = time.toInt()
+
         if(todayBoolean){
             return currHour <= selectedHour
         }

@@ -1,8 +1,8 @@
-package com.example.akshat1.app
+package com.example.NIC_Dungarpur.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.akshat1.R
+import com.example.NIC_Dungarpur.R
 
 class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
