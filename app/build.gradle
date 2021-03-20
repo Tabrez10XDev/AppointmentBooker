@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.NIC_Dungarpur"
+        applicationId "in.nic.raj_dungarpur"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
@@ -23,7 +23,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

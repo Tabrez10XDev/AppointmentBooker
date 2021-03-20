@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1098848611475",
-    "project_id": "akshat1-e682e",
-    "storage_bucket": "akshat1-e682e.appspot.com"
+    "project_number": "667677802848",
+    "project_id": "virtual-appointment-afbd6",
+    "storage_bucket": "virtual-appointment-afbd6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1098848611475:android:e5406699d3f0190a88f166",
+        "mobilesdk_app_id": "1:667677802848:android:a21de757c74d8daca35e05",
         "android_client_info": {
-          "package_name": "com.example.NIC_Dungarpur"
+          "package_name": "in.nic.raj_dungarpur"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1098848611475-6tk8086gqln1htg0qpqrkavbi3e4hqja.apps.googleusercontent.com",
+          "client_id": "667677802848-q6umf9oo1dg0udek09kooilbcrq05eou.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDzc1aGLM-abB_fcRIJTN9Ll74VAHzGMlY"
+          "current_key": "AIzaSyDkYrF9DcyEZpdLn5fdwVuvvRDy34njmQM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1098848611475-6tk8086gqln1htg0qpqrkavbi3e4hqja.apps.googleusercontent.com",
+              "client_id": "667677802848-q6umf9oo1dg0udek09kooilbcrq05eou.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

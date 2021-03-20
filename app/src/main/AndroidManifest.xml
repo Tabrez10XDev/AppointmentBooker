@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Akshat1">
-        <activity android:name="com.example.NIC_Dungarpur.app.Login"
+        <activity android:name="in.nic.raj_dungarpur.app.Login"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.NIC_Dungarpur.app.Dashboard" />
-        <activity android:name="com.example.NIC_Dungarpur.app.DashboardUser" />
+        <activity android:name="in.nic.raj_dungarpur.app.Dashboard" />
+        <activity android:name="in.nic.raj_dungarpur.app.DashboardUser" />
     </application>
 
 </manifest>
