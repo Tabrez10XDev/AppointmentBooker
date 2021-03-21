@@ -12,10 +12,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.NIC_Dungarpur.R
-import com.example.NIC_Dungarpur.app.Dashboard
-import com.example.NIC_Dungarpur.app.DashboardUser
+import `in`.nic.raj_dungarpur.app.Dashboard
+import `in`.nic.raj_dungarpur.app.DashboardUser
 import com.example.NIC_Dungarpur.databinding.FragmentLoginBinding
-import com.example.NIC_Dungarpur.util.ROOT_UID
+import `in`.nic.raj_dungarpur.util.ROOT_UID
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -115,7 +115,8 @@ class  LoginFragment : Fragment() {
     private fun checkLoggedInState(){
 
         if(auth.currentUser != null
-                && auth.uid == ROOT_UID){
+                && auth.uid == ROOT_UID
+        ){
             val intent = Intent(activity, Dashboard::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

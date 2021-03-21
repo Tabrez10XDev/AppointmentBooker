@@ -1,5 +1,6 @@
 package `in`.nic.raj_dungarpur.fragments
 
+import `in`.nic.raj_dungarpur.adapters.DateAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.NIC_Dungarpur.R
-import com.example.NIC_Dungarpur.adapters.SlotAdapter
-import com.example.NIC_Dungarpur.app.Login
+import `in`.nic.raj_dungarpur.adapters.SlotAdapter
+import `in`.nic.raj_dungarpur.app.Login
 import com.example.NIC_Dungarpur.databinding.FragmentSlotViewBinding
-import com.example.NIC_Dungarpur.dialogs.DialogSlot
-import com.example.NIC_Dungarpur.util.BounceEdgeEffectFactory
+import `in`.nic.raj_dungarpur.dialogs.DialogSlot
+import `in`.nic.raj_dungarpur.util.BounceEdgeEffectFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -20,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-private lateinit var dateAdapter : _root_ide_package_.`in`.nic.raj_dungarpur.adapters.DateAdapter
+private lateinit var dateAdapter : DateAdapter
 private lateinit var binding: FragmentSlotViewBinding
 private lateinit var fireStore : FirebaseFirestore
 private lateinit var auth : FirebaseAuth
@@ -56,7 +57,7 @@ class SlotView : Fragment() {
         subscribeToDates()
 
 
-        slotAdapter.setOnItemClickListener {slots, _->
+        slotAdapter.setOnItemClickListener { slots, _->
             val nameMap = slots.filter { (key, value) -> !key.endsWith("uid")}
             val uidMap = slots.filter { (key, value) -> key.endsWith("uid")}
             val submitList = mutableListOf<Map<String,Any>>()
@@ -71,12 +72,14 @@ class SlotView : Fragment() {
                 submitList.add(slotMap)
 
             }
-            val dialog = DialogSlot.newInstance(submitList, selectedDate.toString(), dateMap)
+            val dialog = DialogSlot.newInstance(submitList, selectedDate.toString(),
+                dateMap
+            )
             dialog.show(childFragmentManager, DialogSlot.TAG)
 
         }
 
-        dateAdapter.setOnItemClickListener {slots->
+        dateAdapter.setOnItemClickListener { slots->
             dateMap = slots
             val submitList = feedSlotDataset(slots)
             slotAdapter.loadList= submitList
@@ -104,20 +107,24 @@ class SlotView : Fragment() {
 
 
     private fun setupSlotRecyclerView(){
-        slotAdapter = SlotAdapter(mutableListOf())
+        slotAdapter =
+            SlotAdapter(mutableListOf())
         binding.rvSlot.apply {
             adapter = slotAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
-            edgeEffectFactory = BounceEdgeEffectFactory()
+            edgeEffectFactory =
+                BounceEdgeEffectFactory()
         }
     }
 
     private fun setupDateRecyclerView(){
-        dateAdapter = _root_ide_package_.`in`.nic.raj_dungarpur.adapters.DateAdapter()
+        dateAdapter =
+            DateAdapter()
         binding.rvDate.apply {
             adapter = dateAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL,false)
-            edgeEffectFactory = BounceEdgeEffectFactory()
+            edgeEffectFactory =
+                BounceEdgeEffectFactory()
 
         }
     }

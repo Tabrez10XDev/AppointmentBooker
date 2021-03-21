@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.NIC_Dungarpur.R
-import com.example.NIC_Dungarpur.adapters.SlotAdapter
+import `in`.nic.raj_dungarpur.adapters.SlotAdapter
 import com.example.NIC_Dungarpur.databinding.DialogDeleteSlotsBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -77,7 +77,9 @@ class DialogSlot : DialogFragment() {
             bundle.apply {
                 putString("uid",uid.replaceBrackets())
                 putString("formDocID",formDocID)
-                putString("selectedDate", selectedDate)
+                putString("selectedDate",
+                    selectedDate
+                )
                 putString("slotKey",key.replaceBrackets())
             }
             findNavController().navigate(R.id.action_slotView_to_viewDetailsForm2,bundle)
@@ -130,7 +132,8 @@ class DialogSlot : DialogFragment() {
 
 
     private fun setupSlotRecyclerView(){
-        slotAdapter = SlotAdapter(mutableListOf())
+        slotAdapter =
+            SlotAdapter(mutableListOf())
         binding.rvDialog.apply {
             adapter = slotAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
@@ -139,7 +142,7 @@ class DialogSlot : DialogFragment() {
     }
 
     override fun onResume() {
-        firestore.collection("dates").document(selectedDate).get().addOnSuccessListener {slots->
+        firestore.collection("dates").document(selectedDate).get().addOnSuccessListener { slots->
             val data = slots.data
             data?.let {
             if(dateMap != data.toMap()){

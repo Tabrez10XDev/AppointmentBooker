@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.NIC_Dungarpur.R
 import com.example.NIC_Dungarpur.databinding.DateItemPreviewBinding
 
-class DateAdapter :RecyclerView.Adapter<_root_ide_package_.`in`.nic.raj_dungarpur.adapters.DateAdapter.DateViewHolder>() {
+class DateAdapter :RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 
     inner class DateViewHolder(itemView : View): RecyclerView.ViewHolder(itemView)
 
@@ -31,7 +31,7 @@ class DateAdapter :RecyclerView.Adapter<_root_ide_package_.`in`.nic.raj_dungarpu
     val differ = AsyncListDiffer(this,differCallback)
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): _root_ide_package_.`in`.nic.raj_dungarpur.adapters.DateAdapter.DateViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
 
         return DateViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.date_item_preview,parent,false ))
     }
@@ -41,7 +41,7 @@ class DateAdapter :RecyclerView.Adapter<_root_ide_package_.`in`.nic.raj_dungarpu
         return differ.currentList.size
     }
 
-    override fun onBindViewHolder(holder: _root_ide_package_.`in`.nic.raj_dungarpur.adapters.DateAdapter.DateViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DateViewHolder, position: Int) {
         val date = differ.currentList[position]
 
         binding = DateItemPreviewBinding.bind(holder.itemView)

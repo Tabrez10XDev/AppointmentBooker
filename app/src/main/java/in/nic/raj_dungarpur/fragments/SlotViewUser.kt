@@ -1,5 +1,6 @@
 package `in`.nic.raj_dungarpur.fragments
 
+import `in`.nic.raj_dungarpur.adapters.DateAdapter
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,9 +10,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.NIC_Dungarpur.R
-import com.example.NIC_Dungarpur.adapters.SlotAdapter
+import `in`.nic.raj_dungarpur.adapters.SlotAdapter
 import com.example.NIC_Dungarpur.databinding.FragmentSlotViewUserBinding
-import com.example.NIC_Dungarpur.util.BounceEdgeEffectFactory
+import `in`.nic.raj_dungarpur.util.BounceEdgeEffectFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -21,7 +22,7 @@ import java.util.*
 class SlotViewUser : Fragment() {
     private lateinit var fireStore: FirebaseFirestore
     private lateinit var slotAdapter: SlotAdapter
-    private lateinit var dateAdapter : _root_ide_package_.`in`.nic.raj_dungarpur.adapters.DateAdapter
+    private lateinit var dateAdapter : DateAdapter
     private lateinit var auth : FirebaseAuth
     private lateinit var binding : FragmentSlotViewUserBinding
     private var selectedDate : String ?= null
@@ -73,20 +74,23 @@ class SlotViewUser : Fragment() {
 
 
     private fun setupSlotRecyclerView(){
-        slotAdapter = SlotAdapter(mutableListOf())
+        slotAdapter =
+            SlotAdapter(mutableListOf())
         binding.rvSlotUser.apply {
             adapter = slotAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
-            edgeEffectFactory = BounceEdgeEffectFactory()
+            edgeEffectFactory =
+                BounceEdgeEffectFactory()
         }
     }
 
     private fun setupDateRecyclerView(){
-        dateAdapter = _root_ide_package_.`in`.nic.raj_dungarpur.adapters.DateAdapter()
+        dateAdapter = DateAdapter()
         binding.rvDateUser.apply {
             adapter = dateAdapter
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL,false)
-            edgeEffectFactory = BounceEdgeEffectFactory()
+            edgeEffectFactory =
+                BounceEdgeEffectFactory()
         }
     }
 

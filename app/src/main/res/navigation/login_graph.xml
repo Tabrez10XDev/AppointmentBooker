@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.NIC_Dungarpur.fragments.LoginFragment"
+        android:name="in.nic.raj_dungarpur.fragments.LoginFragment"
         android:label="fragment_login_"
         tools:layout="@layout/fragment_login" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.NIC_Dungarpur.fragments.SignupFragment"
+        android:name="in.nic.raj_dungarpur.fragments.SignupFragment"
         android:label="fragment_signup_"
         tools:layout="@layout/fragment_signup" />
 </navigation>

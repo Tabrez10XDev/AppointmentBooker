@@ -11,9 +11,9 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.NIC_Dungarpur.R
-import com.example.NIC_Dungarpur.api.RetrofitInstance
+import `in`.nic.raj_dungarpur.api.RetrofitInstance
 import com.example.NIC_Dungarpur.databinding.FragmentUserDetailsFormBinding
-import com.example.NIC_Dungarpur.util.apikey
+import `in`.nic.raj_dungarpur.util.apikey
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue

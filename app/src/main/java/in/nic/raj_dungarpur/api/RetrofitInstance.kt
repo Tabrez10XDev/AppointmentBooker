@@ -1,6 +1,6 @@
 package `in`.nic.raj_dungarpur.api
 
-import com.example.NIC_Dungarpur.util.BASE_URL
+import `in`.nic.raj_dungarpur.util.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,7 +21,8 @@ class RetrofitInstance {
                 .build()
         }
         val api: MeetAPI by lazy {
-            retrofit.create(MeetAPI::class.java)
+            retrofit.create(
+                MeetAPI::class.java)
         }
     }
 }

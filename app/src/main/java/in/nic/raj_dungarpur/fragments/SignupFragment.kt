@@ -10,10 +10,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.NIC_Dungarpur.R
-import com.example.NIC_Dungarpur.app.Dashboard
-import com.example.NIC_Dungarpur.app.DashboardUser
+import `in`.nic.raj_dungarpur.app.Dashboard
+import `in`.nic.raj_dungarpur.app.DashboardUser
 import com.example.NIC_Dungarpur.databinding.FragmentSignupBinding
-import com.example.NIC_Dungarpur.util.ROOT_UID
+import `in`.nic.raj_dungarpur.util.ROOT_UID
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
