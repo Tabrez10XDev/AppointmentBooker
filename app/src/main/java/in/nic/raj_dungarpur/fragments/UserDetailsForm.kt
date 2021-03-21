@@ -174,16 +174,14 @@ class UserDetailsForm : Fragment() {
         data.addProperty("time", time )
         data.addProperty("date", date)
 
-        Log.d("onccc", apikey + "\n" + time + "\n" + date)
         var link = ""
         CoroutineScope(Dispatchers.IO).launch{
             val retrievedData = RetrofitInstance.api.getMeetLink(data)
-            Log.d("onccc",retrievedData.toString())
 
             if(retrievedData.isSuccessful){
-                Log.d("onccc","success")
 
                 link = retrievedData.body()?.link.toString()
+                Log.d("Finalist",retrievedData.body().toString() + "\n" + retrievedData.errorBody())
                 if(link.isEmpty()){
                     link = retrievedData.message()
                 }
