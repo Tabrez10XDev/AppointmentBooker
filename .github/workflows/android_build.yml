@@ -22,12 +22,6 @@ jobs:
           java-version: 1.8
           
 
-      - name: Build all artifacts        
-        id: buildAllApks
-        uses: eskatos/gradle-command-action@v1.3.3
-        with:
-          gradle-version: current
-          wrapper-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
-          arguments: assemble
+      - name: Build Project
+        run: ./gradlew assemble
+
